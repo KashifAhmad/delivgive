@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Delivgive</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="font_family_condensed">sans-serif-condensed</string>
+    <string name="skip">Skip</string>
+    <string name="appName">Keudoz</string>
+    <string name="welcome">Welcome</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
+    <string name="no_account">Don\'t have an account ?</string>
+    <string name="i_m_a_user">I\'m a User</string>
+    <string name="select">Select your account type to \ncontinue.</string>
+    <string name="enter">Enter your login details to access your account.</string>
+    <string name="already">Already have an account ?</string>
+    <string name="start">Start by entering your email \n address below.</string>
+    <string name="contain">Your password must be atleast 8 characters long and contain one symbol</string>
+    <string name="firstandlast">Enter your first and last \nname to continue.</string>
+    <string name="service_details">Enter your service details to help users finding you!</string>
+    <string name="individual_service">I\'m providing Service individualy</string>
+    <string name="service_description"><![CDATA[If you work individually upload your photo instead  of Day Care Center & your details, Else skip this.]]></string>
+    <string name="how_will">How\'ll you like to perform services</string>
+    <string name="how_ll">How\'ll like to provide the service</string>
+    <string name="what_services">What Services you can provide</string>
+    <string name="read">Read the agreement carefully before getting started, by clicking \'agreed\' you will accept our terms and conditions and Privacy Policy</string>
+    <string name="as_service_provider">As services provider, you are responsible for the following:</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_service_according_to">Choose Service According to:</string>
+    <string name="btn_continue">Continue</string>
+    <string name="your_request_has_been_sent">Your request has been sent. In about some while you\'ll be notified if the provider accept your booking. Once provider approves the order you can easily communicate with them.</string>
+    <string name="agreement_text">By Signing up you accept the terms of service and Privacy Policy</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="title_activity_main_bottom_nav">MainBottomNavActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+</resources>
