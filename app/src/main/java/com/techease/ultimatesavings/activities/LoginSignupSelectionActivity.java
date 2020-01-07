@@ -38,7 +38,7 @@ public class LoginSignupSelectionActivity extends AppCompatActivity implements V
                 startActivity(new Intent(this, SignUpActivity.class));
                 break;
             case R.id.llSignIn:
-                startActivity(new Intent(this, MainBottomNavActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
         }
     }
 }

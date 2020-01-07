@@ -7,4 +7,5 @@
     <dimen name="startUpLayoutPadding">50dp</dimen>
     <dimen name="app_name_size">25sp</dimen>
     <dimen name="app_text_size">14sp</dimen>
+    <dimen name="clickableTextViewPadding">5dp</dimen>
 </resources>

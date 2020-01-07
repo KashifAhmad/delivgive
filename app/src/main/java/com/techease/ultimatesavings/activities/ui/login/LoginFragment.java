@@ -15,9 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.techease.ultimatesavings.R;
+import com.techease.ultimatesavings.activities.ForgotPasswordActivity;
 import com.techease.ultimatesavings.activities.LoginActivity;
 import com.techease.ultimatesavings.activities.MainActivity;
 import com.techease.ultimatesavings.activities.MainBottomNavActivity;
+import com.techease.ultimatesavings.activities.SignUpActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +33,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     EditText etEmail;
     @BindView(R.id.etPassword)
     EditText etPassword;
+    @BindView(R.id.tvForgotPassword)
+    TextView tvForgotPassword;
     private View view;
     private LoginViewModel mViewModel;
     private String emailAddress, password;
@@ -61,16 +65,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         tvSignUp.setOnClickListener(this);
         ivBack.setOnClickListener(this);
+        tvForgotPassword.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvSignUp:
-                startActivity(new Intent(getActivity(), MainBottomNavActivity.class));
+                startActivity(new Intent(getActivity(), SignUpActivity.class));
                 break;
             case R.id.ivBack:
                 getActivity().onBackPressed();
+                break;
+            case R.id.tvForgotPassword:
+                startActivity(new Intent(getActivity(), ForgotPasswordActivity.class));
+                break;
         }
     }
     private boolean isValid() {

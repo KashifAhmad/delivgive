@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/screenPadding"
-                android:padding="5dp"
+                android:padding="@dimen/clickableTextViewPadding"
                 android:text="@string/sign_up"
                 android:textColor="@color/black"
                 android:textAllCaps="false"
@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:singleLine="true"
+                    android:inputType="textEmailAddress"
                     android:imeOptions="actionNext"
                     android:layout_marginBottom="@dimen/widgetMargin"
                     android:hint="Enter your email address"/>
@@ -71,6 +72,7 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPassword"
                     android:backgroundTint="@color/black"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
@@ -79,12 +81,12 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvAgreement"
+                android:id="@+id/tvForgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/screenPadding"
                 android:text="@string/forgot_password"
-                android:padding="5dp"
+                android:padding="@dimen/clickableTextViewPadding"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/llForm"
@@ -99,7 +101,7 @@
                 android:background="@drawable/round_button2"
                 android:text="@string/sign_in"
                 android:layout_marginTop="@dimen/widgetMargin"
-                android:layout_below="@id/tvAgreement"
+                android:layout_below="@id/tvForgotPassword"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />
 
