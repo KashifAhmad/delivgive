@@ -1,6 +1,7 @@
 package com.techease.ultimatesavings.activities;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.techease.ultimatesavings.R;
@@ -23,10 +24,11 @@ public class MainBottomNavActivity extends AppCompatActivity {
                         ViewChanger.fragmentChanger(MainBottomNavActivity.this, new PremiumFragment(), R.id.container);
                         return true;
                     case R.id.navCreate:
-                        return true;
                     case R.id.navBouquets:
+                        Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.navProfile:
+                        ViewChanger.fragmentChanger(MainBottomNavActivity.this, new ProfileFragment(), R.id.container);
                         return true;
 
                 }
