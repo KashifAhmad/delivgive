@@ -8,16 +8,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.techease.ultimatesavings.R;
+import com.techease.ultimatesavings.activities.LoginActivity;
+import com.techease.ultimatesavings.activities.MainBottomNavActivity;
 import com.techease.ultimatesavings.activities.SignUpActivity;
+import com.techease.ultimatesavings.models.changePasswordModels.ChangePasswordResponse;
+import com.techease.ultimatesavings.utils.AppRepository;
+import com.techease.ultimatesavings.utils.Connectivity;
+import com.techease.ultimatesavings.utils.networking.BaseNetworking;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChangePasswordFragment extends Fragment implements View.OnClickListener {
 
@@ -56,8 +71,13 @@ public class ChangePasswordFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnChangePassword:
-                startActivity(new Intent(getActivity(), SignUpActivity.class));
-                break;
+                if (isValid()) {
+                    if (Connectivity.isConnected(getActivity())) {
+                        loginCall();
+                    } else {
+                        Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+                    }
+                }                break;
             case R.id.ivBack:
                 getActivity().onBackPressed();
                 break;
@@ -83,6 +103,33 @@ public class ChangePasswordFragment extends Fragment implements View.OnClickList
 
         return valid;
     }
+    private void loginCall() {
+        Call<ChangePasswordResponse> signUpResponseCall = BaseNetworking.apiServices().changePassword(AppRepository.mUserEmail(getActivity()), password);
+        signUpResponseCall.enqueue(new Callback<ChangePasswordResponse>() {
+            @Override
+            public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
+                if (response.isSuccessful()) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChangePasswordResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Server Not Responding", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

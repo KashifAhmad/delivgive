@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.techease.ultimatesavings.R;
+import com.techease.ultimatesavings.activities.LoginSignupSelectionActivity;
+import com.techease.ultimatesavings.activities.MainBottomNavActivity;
+import com.techease.ultimatesavings.utils.AppRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

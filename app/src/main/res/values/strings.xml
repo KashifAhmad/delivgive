@@ -38,5 +38,9 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="craving">Craving for your favorite food? Takeaway will deliver it where ever you are!</string>
+    <string name="free">Free</string>
+    <string name="premium">Premium</string>
+    <string name="create">Create</string>
+    <string name="bouquets">Bouquets</string>
 
 </resources>

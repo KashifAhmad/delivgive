@@ -4,28 +4,42 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.techease.ultimatesavings.R;
+import com.techease.ultimatesavings.activities.fragments.FreeFlowersFragment;
+import com.techease.ultimatesavings.activities.fragments.FreeFlowersFragment_ViewBinding;
+import com.techease.ultimatesavings.activities.fragments.PremiumFragment;
+import com.techease.ultimatesavings.utils.ViewChanger;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 public class MainBottomNavActivity extends AppCompatActivity {
 
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.navFree:
+                        ViewChanger.fragmentChanger(MainBottomNavActivity.this, new FreeFlowersFragment(), R.id.container);
+                        return true;
+                    case R.id.navPremium:
+                        ViewChanger.fragmentChanger(MainBottomNavActivity.this, new PremiumFragment(), R.id.container);
+                        return true;
+                    case R.id.navCreate:
+                        return true;
+                    case R.id.navBouquets:
+                        return true;
+                    case R.id.navProfile:
+                        return true;
+
+                }
+                return false;
+            };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_bottom_nav);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+
+        BottomNavigationView navigation = findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navFree);
     }
 
 }

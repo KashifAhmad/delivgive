@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/screenPadding">
+
+    <TextView
+        android:id="@+id/tvLetsCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widgetMargin"
+        android:text="Premium Flowers"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/app_name_size"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/widgetMargin"
+        android:padding="@dimen/clickableTextViewPadding"
+        android:src="@drawable/ic_search_black_24dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFlowers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLetsCreate"
+        android:layout_marginTop="@dimen/widgetMargin"
+        tools:ignore="MissingConstraints" />
+</RelativeLayout>

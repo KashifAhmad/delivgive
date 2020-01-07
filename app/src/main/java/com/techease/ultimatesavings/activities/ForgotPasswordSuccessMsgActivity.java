@@ -2,6 +2,7 @@ package com.techease.ultimatesavings.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class ForgotPasswordSuccessMsgActivity extends AppCompatActivity implemen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnGoToEmail:
+                startActivity(new Intent(this, VerifyCodeActivity.class));
                 break;
             case R.id.ivBack:
                 onBackPressed();

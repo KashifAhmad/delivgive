@@ -1,6 +1,7 @@
 package com.techease.ultimatesavings.utils.networking;
 
 import com.techease.ultimatesavings.models.changePasswordModels.ChangePasswordResponse;
+import com.techease.ultimatesavings.models.freeFlowersModels.FreeFlowersResponse;
 import com.techease.ultimatesavings.models.loginModels.LoginResponse;
 import com.techease.ultimatesavings.models.genericResponseModel.GenericResponse;
 import com.techease.ultimatesavings.models.signUpModels.SignUpResponse;
@@ -8,6 +9,7 @@ import com.techease.ultimatesavings.models.signUpModels.SignUpResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface APIServices {
@@ -37,6 +39,11 @@ public interface APIServices {
     Call<ChangePasswordResponse> changePassword(@Field("email") String email,
                                                 @Field("password") String password);
 
+    @GET("free_flowers")
+    Call<FreeFlowersResponse> freeFlowers();
+
+    @GET("premium_flowers")
+    Call<FreeFlowersResponse> premiumFlowers();
 
 }
 

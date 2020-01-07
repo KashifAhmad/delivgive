@@ -22,6 +22,10 @@ public class AppRepository {
     public static String mAPIToken(Context context) {
         return mGetValue(context).getString("auth_token", "");
     }
+    public static String mUserEmail(Context context) {
+        return mGetValue(context).getString("email", "");
+    }
+
     public static String mLat(Context context) {
         return mGetValue(context).getString("lat", "");
     }

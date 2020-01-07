@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,9 +17,20 @@ import androidx.fragment.app.Fragment;
 
 import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.activities.LoginActivity;
+import com.techease.ultimatesavings.models.signUpModels.SignUpResponse;
+import com.techease.ultimatesavings.utils.Connectivity;
+import com.techease.ultimatesavings.utils.networking.BaseNetworking;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
@@ -35,6 +48,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     EditText etPassword;
     @BindView(R.id.etConfirmPassword)
     EditText etConfirmPassword;
+    @BindView(R.id.btnSignUp)
+    Button btnSignUp;
     private View view;
     private String fullName, DOB, emailAddress, password, confirmPassword;
     private boolean valid = false;
@@ -56,6 +71,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         tvSignIn.setOnClickListener(this);
         ivBack.setOnClickListener(this);
+        btnSignUp.setOnClickListener(this);
     }
 
     @Override
@@ -66,15 +82,26 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tvSignIn:
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+            case R.id.btnSignUp:
+                if (isValid()) {
+                    if (Connectivity.isConnected(getActivity())) {
+                        signUpCall();
+                    } else {
+                        Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 break;
             case R.id.ivBack:
                 getActivity().onBackPressed();
+                break;
+            case R.id.tvSignIn:
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                break;
         }
     }
 
     private boolean isValid() {
+        valid = true;
         fullName = etFullName.getText().toString();
         DOB = etDOB.getText().toString();
         emailAddress = etEmail.getText().toString();
@@ -104,13 +131,42 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         } else {
             etPassword.setError(null);
         }
-        if (!confirmPassword.equals(password)){
+        if (!confirmPassword.equals(password)) {
             etConfirmPassword.setError("Password doesn't match");
             valid = false;
-        }else {
+        } else {
             etConfirmPassword.setError(null);
         }
         return valid;
+    }
+
+    private void signUpCall() {
+        Call<SignUpResponse> signUpResponseCall = BaseNetworking.apiServices().signUp(fullName, DOB, emailAddress, password, confirmPassword);
+        signUpResponseCall.enqueue(new Callback<SignUpResponse>() {
+            @Override
+            public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
+                if (response.isSuccessful()) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Server Not Responding", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

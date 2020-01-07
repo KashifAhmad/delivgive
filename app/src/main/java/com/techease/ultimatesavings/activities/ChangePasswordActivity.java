@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.activities.ui.changepassword.ChangePasswordFragment;
 
 public class ChangePasswordActivity extends AppCompatActivity {

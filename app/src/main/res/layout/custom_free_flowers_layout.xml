@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="220dp"
+    android:layout_marginBottom="@dimen/screenPadding"
+    android:background="@color/colorYellow">
+
+    <TextView
+        android:id="@+id/tvFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/screenPadding"
+        android:text="Free"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFree">
+
+        <ImageView
+            android:id="@+id/ivFlower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/group_2" />
+
+        <TextView
+            android:id="@+id/tvFlowerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/screenPadding"
+            android:background="@drawable/round_bg_pink"
+            android:padding="@dimen/clickableTextViewPadding"
+            android:text="Flower Name Here"
+            android:textColor="@color/colorWhite" />
+    </FrameLayout>
+
+</RelativeLayout>
