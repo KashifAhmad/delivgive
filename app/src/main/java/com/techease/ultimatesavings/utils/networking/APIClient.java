@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
     APIClient context = this;
-    public static final String BASE_URL = "http://api-deal-machine.drivingfor.cash/api/";
+    public static final String BASE_URL = "https://www.delivgive.com/Flower_App/public/api/";
     private static Retrofit retrofit = null;
 
 
