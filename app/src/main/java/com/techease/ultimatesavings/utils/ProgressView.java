@@ -9,20 +9,18 @@ import android.widget.TextView;
 
 import com.techease.ultimatesavings.R;
 
-public class DialogBuilder {
-    public static AlertDialog dialog;
+public class ProgressView {
+    public static AlertDialog mDialog;
 
-    public static AlertDialog dialogBuilder(Context context, String label) {
+    public static AlertDialog loader(Context context) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.custom_dialog_layout, null);
         dialogBuilder.setView(dialogView);
-        TextView textView = dialogView.findViewById(R.id.tv_dialog_text);
-        textView.setText(label);
-        dialog = dialogBuilder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.show();
+        mDialog = dialogBuilder.create();
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        mDialog.show();
 
-        return dialog;
+        return mDialog;
     }
 }

@@ -1,6 +1,5 @@
 package com.techease.ultimatesavings.activities.ui.login;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ import com.techease.ultimatesavings.activities.SignUpActivity;
 import com.techease.ultimatesavings.models.loginModels.LoginResponse;
 import com.techease.ultimatesavings.utils.AppRepository;
 import com.techease.ultimatesavings.utils.Connectivity;
+import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
 import org.json.JSONException;
@@ -54,6 +54,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private LoginViewModel mViewModel;
     private String emailAddress, password;
     private boolean valid = false;
+
 
 
     public static LoginFragment newInstance() {
@@ -99,6 +100,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.btnSignIn:
                 if (isValid()) {
                     if (Connectivity.isConnected(getActivity())) {
+                        ProgressView.loader(getActivity());
                         loginCall();
                     } else {
                         Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
@@ -132,6 +134,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         signUpResponseCall.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                ProgressView.mDialog.dismiss();
+
                 if (response.isSuccessful()) {
                     startActivity(new Intent(getActivity(), MainBottomNavActivity.class));
                     AppRepository.mPutValue(getActivity()).putBoolean("loggedIn", true).commit();
@@ -153,6 +157,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                ProgressView.mDialog.dismiss();
                 Toast.makeText(getActivity(), "Server Not Responding", Toast.LENGTH_SHORT).show();
             }
         });

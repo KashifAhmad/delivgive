@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.techease.ultimatesavings.activities.MainBottomNavActivity;
 import com.techease.ultimatesavings.models.genericResponseModel.GenericResponse;
 import com.techease.ultimatesavings.utils.AppRepository;
 import com.techease.ultimatesavings.utils.Connectivity;
+import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
 import org.json.JSONException;
@@ -67,6 +69,7 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
             case R.id.btnRecover:
                 if (isValid()) {
                     if (Connectivity.isConnected(getActivity())) {
+                        ProgressView.loader(getActivity());
                         forgotPassword();
                     } else {
                         Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
@@ -93,6 +96,7 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
         signUpResponseCall.enqueue(new Callback<GenericResponse>() {
             @Override
             public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
+                ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()) {
                     startActivity(new Intent(getActivity(), ForgotPasswordSuccessMsgActivity.class));
                     AppRepository.mPutValue(getActivity()).putString("email", emailAddress).commit();
@@ -113,6 +117,7 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
 
             @Override
             public void onFailure(Call<GenericResponse> call, Throwable t) {
+                ProgressView.mDialog.dismiss();
                 Toast.makeText(getActivity(), "Server Not Responding", Toast.LENGTH_SHORT).show();
             }
         });

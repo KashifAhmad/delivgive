@@ -14,6 +14,7 @@ import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.adapters.FreeFlowersAdapter;
 import com.techease.ultimatesavings.models.freeFlowersModels.Datum;
 import com.techease.ultimatesavings.models.freeFlowersModels.FreeFlowersResponse;
+import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class PremiumFragment extends Fragment {
         rvFlowers.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         adapter = new FreeFlowersAdapter(getActivity(), flowersList);
         rvFlowers.setAdapter(adapter);
+        ProgressView.loader(getActivity());
         initData();
     }
     private void initData() {
@@ -51,6 +53,7 @@ public class PremiumFragment extends Fragment {
         flowersResponseCall.enqueue(new Callback<FreeFlowersResponse>() {
             @Override
             public void onResponse(Call<FreeFlowersResponse> call, Response<FreeFlowersResponse> response) {
+                ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()){
                     flowersList.addAll(response.body().getData());
                     adapter.notifyDataSetChanged();
@@ -59,6 +62,8 @@ public class PremiumFragment extends Fragment {
 
             @Override
             public void onFailure(Call<FreeFlowersResponse> call, Throwable t) {
+                ProgressView.mDialog.dismiss();
+
 
             }
         });

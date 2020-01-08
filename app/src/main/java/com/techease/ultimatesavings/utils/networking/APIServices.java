@@ -37,7 +37,7 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("ChangePassword")
     Call<ChangePasswordResponse> changePassword(@Field("email") String email,
-                                                @Field("password") String password);
+                                                @Field("newPassword") String password);
 
     @GET("free_flowers")
     Call<FreeFlowersResponse> freeFlowers();

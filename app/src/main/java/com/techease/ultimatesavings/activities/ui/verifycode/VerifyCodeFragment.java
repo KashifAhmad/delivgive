@@ -19,6 +19,7 @@ import com.techease.ultimatesavings.activities.ChangePasswordActivity;
 import com.techease.ultimatesavings.activities.MainBottomNavActivity;
 import com.techease.ultimatesavings.models.genericResponseModel.GenericResponse;
 import com.techease.ultimatesavings.utils.Connectivity;
+import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
 import org.json.JSONException;
@@ -66,6 +67,7 @@ public class VerifyCodeFragment extends Fragment implements View.OnClickListener
             case R.id.btnVerify:
                 if (isValid()) {
                     if (Connectivity.isConnected(getActivity())) {
+                        ProgressView.loader(getActivity());
                         verifyCodeCall();
                     } else {
                         Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
@@ -91,6 +93,7 @@ public class VerifyCodeFragment extends Fragment implements View.OnClickListener
         signUpResponseCall.enqueue(new Callback<GenericResponse>() {
             @Override
             public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
+                ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()) {
                     startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
                 } else {
@@ -110,6 +113,7 @@ public class VerifyCodeFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onFailure(Call<GenericResponse> call, Throwable t) {
+                ProgressView.mDialog.dismiss();
                 Toast.makeText(getActivity(), "Server Not Responding", Toast.LENGTH_SHORT).show();
             }
         });

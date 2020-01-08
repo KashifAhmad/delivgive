@@ -19,6 +19,7 @@ import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.activities.LoginActivity;
 import com.techease.ultimatesavings.models.signUpModels.SignUpResponse;
 import com.techease.ultimatesavings.utils.Connectivity;
+import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
 import org.json.JSONException;
@@ -85,6 +86,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             case R.id.btnSignUp:
                 if (isValid()) {
                     if (Connectivity.isConnected(getActivity())) {
+                        ProgressView.loader(getActivity());
+
                         signUpCall();
                     } else {
                         Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
@@ -145,6 +148,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         signUpResponseCall.enqueue(new Callback<SignUpResponse>() {
             @Override
             public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
+                ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
@@ -164,6 +168,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                ProgressView.mDialog.dismiss();
                 Toast.makeText(getActivity(), "Server Not Responding", Toast.LENGTH_SHORT).show();
             }
         });
