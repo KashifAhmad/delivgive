@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.adapters.FreeFlowersAdapter;
+import com.techease.ultimatesavings.adapters.PremiumFlowersAdapter;
 import com.techease.ultimatesavings.models.freeFlowersModels.Datum;
 import com.techease.ultimatesavings.models.freeFlowersModels.FreeFlowersResponse;
 import com.techease.ultimatesavings.utils.ProgressView;
@@ -28,7 +29,7 @@ import retrofit2.Response;
 
 
 public class PremiumFragment extends Fragment {
-    private FreeFlowersAdapter adapter;
+    private PremiumFlowersAdapter adapter;
     List<Datum> flowersList = new ArrayList<>();
     @BindView(R.id.rvFlowers)
     RecyclerView rvFlowers;
@@ -43,7 +44,7 @@ public class PremiumFragment extends Fragment {
     private void initUI() {
         ButterKnife.bind(this, root);
         rvFlowers.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        adapter = new FreeFlowersAdapter(getActivity(), flowersList);
+        adapter = new PremiumFlowersAdapter(getActivity(), flowersList);
         rvFlowers.setAdapter(adapter);
         ProgressView.loader(getActivity());
         initData();

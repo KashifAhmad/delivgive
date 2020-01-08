@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/paymentoptions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/screenPadding"
+    android:background="@color/background">
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/screenPadding"
+        android:src="@drawable/ic_arrow_back_black_24dp" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivBack"
+        android:textColor="@color/black"
+        android:text="Select payment \nmethod"
+        android:textSize="@dimen/app_name_size"
+        android:textStyle="bold" />
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="@dimen/screenPadding"
+        android:padding="@dimen/screenPadding">
+
+        <RadioButton
+            android:id="@+id/rbPaypal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/screenPadding"
+            android:text="Paypal"
+            android:textStyle="bold" />
+
+
+        <RadioButton
+            android:id="@+id/rbPayCredit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/screenPadding"
+            android:text="Pay with Credit"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/screenPadding"
+        android:layout_margin="@dimen/screenPadding"
+        android:layout_below="@id/radioGroup">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pexels_photo" />
+
+        <Button
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/round_button2"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite" />
+    </FrameLayout>
+</RelativeLayout>

@@ -1,14 +1,92 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.techease.ultimatesavings.activities.ProfileFragment">
+    android:background="@color/background"
+    android:padding="@dimen/screenPadding">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvProfile"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout" />
+        android:padding="@dimen/screenPadding"
+        android:text="Profile"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
 
-</FrameLayout>
+        android:textSize="@dimen/app_name_size"
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:id="@+id/ivSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/screenPadding"
+        android:src="@mipmap/settings" />
+
+    <FrameLayout
+        android:id="@+id/flProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivSettings"
+
+        android:layout_centerHorizontal="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/paterns" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginStart="50dp"
+            android:src="@mipmap/change_image_button" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/flProfilePicture"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/widgetMargin"
+        android:text="Profile"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/app_name_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvUserName"
+        android:layout_centerHorizontal="true"
+        android:text="Kacha garai, complex"
+        android:textAllCaps="false"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvRecentlyUsed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLocation"
+        android:layout_margin="@dimen/widgetMargin"
+        android:text="Recently Used"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/screenPadding"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecentlyUsed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvRecentlyUsed"
+        android:layout_marginTop="@dimen/widgetMargin" />
+
+</RelativeLayout>

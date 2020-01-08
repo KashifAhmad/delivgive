@@ -25,6 +25,9 @@ public class AppRepository {
     public static String mUserEmail(Context context) {
         return mGetValue(context).getString("email", "");
     }
+    public static String mSubscriptionType(Context context) {
+        return mGetValue(context).getString("subsType", "");
+    }
 
     public static String mLat(Context context) {
         return mGetValue(context).getString("lat", "");

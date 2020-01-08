@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/screenPadding"
+            android:layout_marginEnd="@dimen/screenPadding">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/screenPadding"
+                android:src="@drawable/ic_arrow_back_black_24dp" />
+
+
+            <TextView
+                android:id="@+id/tvSettingsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivBack"
+                android:layout_marginTop="@dimen/widgetMargin"
+                android:text="Settings"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/app_name_size"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/llAccountSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSettingsTitle"
+                android:layout_marginTop="@dimen/widgetMargin"
+                android:orientation="horizontal"
+                android:padding="@dimen/screenPadding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/screenPadding"
+                    android:src="@mipmap/premium_flower" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account Settings"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/clickableTextViewPadding"
+                        android:text="Account Settings" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/llAccountSettings"
+                android:background="@color/light_gray" />
+
+            <LinearLayout
+                android:id="@+id/llSubscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llAccountSettings"
+                android:layout_marginTop="@dimen/widgetMargin"
+                android:orientation="horizontal"
+                android:padding="@dimen/screenPadding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/screenPadding"
+                    android:src="@mipmap/premium_flower" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subscription"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/clickableTextViewPadding"
+                        android:text="Subscribe to get access to the premium account" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/llSubscription"
+                android:background="@color/light_gray" />
+
+
+            <LinearLayout
+                android:id="@+id/llRateUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view2"
+                android:layout_marginTop="@dimen/widgetMargin"
+                android:orientation="horizontal"
+                android:padding="@dimen/screenPadding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/screenPadding"
+                    android:src="@mipmap/premium_flower" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rate Us"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/clickableTextViewPadding"
+                        android:text="Give your feedback on it" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/llRateUs"
+                android:background="@color/light_gray" />
+
+
+            <LinearLayout
+                android:id="@+id/llContactUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view3"
+                android:layout_marginTop="@dimen/widgetMargin"
+                android:orientation="horizontal"
+                android:padding="@dimen/screenPadding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/screenPadding"
+                    android:src="@mipmap/premium_flower" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Us"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/clickableTextViewPadding"
+                        android:text="Connect with us if you have any issues" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/llContactUs"
+                android:background="@color/light_gray" />
+
+
+            <LinearLayout
+                android:id="@+id/llAboutThisApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view4"
+                android:layout_marginTop="@dimen/widgetMargin"
+                android:orientation="horizontal"
+                android:padding="@dimen/screenPadding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/screenPadding"
+                    android:src="@mipmap/premium_flower" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About this app"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/clickableTextViewPadding"
+                        android:text="App Status" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/llContactUs"
+                android:background="@color/light_gray" />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@id/llAboutThisApp"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/screenPadding">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pexels_photo" />
+
+                <Button
+                    android:id="@+id/btnLogOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/round_button2"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite" />
+            </FrameLayout>
+        </RelativeLayout>
+
+    </TableLayout>
+</ScrollView>

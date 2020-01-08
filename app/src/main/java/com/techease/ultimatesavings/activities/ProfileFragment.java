@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -20,8 +21,8 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment implements View.OnClickListener {
-    @BindView(R.id.btnLogout)
-    Button btnLogout;
+    @BindView(R.id.ivSettings)
+    ImageView ivSetting;
     private View view;
 
     public ProfileFragment() {
@@ -40,16 +41,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void initUI() {
         ButterKnife.bind(this, view);
-        btnLogout.setOnClickListener(this);
+        ivSetting.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnLogout:
-                AppRepository.mPutValue(getActivity()).putBoolean("loggedIn", false).commit();
-                getActivity().finishAffinity();
-                startActivity(new Intent(getActivity(), LoginSignupSelectionActivity.class));
+            case R.id.ivSettings:
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
         }
     }
 }
