@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fonts_array">
+        <item><font>"@font/andalusia"</font></item>
+        <item >Poppins</item>
+        <item >Phitton</item>
+        <item>Selvillia Dreamer</item>
+        <item>Vlorens</item>
+    </string-array>
+    <string-array name="style_array">
+        <item>Normal</item>
+        <item><b>Bold</b></item>
+    </string-array>
+</resources>

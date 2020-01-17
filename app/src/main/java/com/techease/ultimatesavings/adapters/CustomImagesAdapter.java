@@ -2,7 +2,6 @@ package com.techease.ultimatesavings.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
 import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.models.Images;
-import com.techease.ultimatesavings.models.freeFlowersModels.Datum;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,9 +25,7 @@ public class CustomImagesAdapter extends RecyclerView.Adapter<CustomImagesAdapte
 
     private Context context;
     private List<Images> flowersList;
-    private boolean isSelected = false;
     private int lastPosition = -1;
-
 
     public CustomImagesAdapter(Context context, List<Images> flowersList) {
         this.flowersList = flowersList;
@@ -47,19 +44,18 @@ public class CustomImagesAdapter extends RecyclerView.Adapter<CustomImagesAdapte
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Images flower = flowersList.get(position);
         holder.ivFlowerImage.setImageResource(flower.imageId);
-        holder.ivFlowerImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (flower.isSelected){
-                    holder.ivFlowerImage.setBackgroundColor(context.getResources().getColor(R.color.light_gray));
-                }else {
-                    flower.setSelected(true);
-                    lastPosition = position;
-                    holder.ivFlowerImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-                }
+        holder.ivSelected.setVisibility(View.GONE);
+        holder.ivFlowerImage.setBackgroundColor(flower.isSelected() ? context.getResources().getColor(R.color.colorPrimary) : context.getResources().getColor(R.color.light_gray));
+        holder.ivFlowerImage.setOnClickListener(v -> {
+            lastPosition = position;
+            notifyDataSetChanged();
 
-            }
         });
+        if (position == lastPosition) {
+            holder.ivFlowerImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        } else {
+            holder.ivFlowerImage.setBackgroundColor(context.getResources().getColor(R.color.light_gray));
+        }
 
 
 
@@ -73,11 +69,12 @@ public class CustomImagesAdapter extends RecyclerView.Adapter<CustomImagesAdapte
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvName, tvFree;
-        ImageView ivFlowerImage;
+        ImageView ivFlowerImage, ivSelected;
 
         MyViewHolder(View view) {
             super(view);
             ivFlowerImage = view.findViewById(R.id.ivFlower);
+            ivSelected = view.findViewById(R.id.ivSelected);
 
 
         }

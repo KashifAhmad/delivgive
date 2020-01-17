@@ -44,7 +44,7 @@ public class MainBottomNavActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navFree);
+        navigation.setSelectedItemId(R.id.navCreate);
     }
 
 }

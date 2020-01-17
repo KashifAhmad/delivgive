@@ -17,7 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rvFlowers"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/widgetMargin"
-        android:text="Select" />
+        android:layout_margin="@dimen/widgetMargin"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button"
+        android:text="Done" />
 
 </RelativeLayout>

@@ -171,15 +171,6 @@
                 </TableLayout>
             </HorizontalScrollView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvFlowers"
-                android:layout_width="match_parent"
-                android:layout_below="@id/hsvItems"
-                android:visibility="gone"
-                android:background="@color/white"
-                android:layout_margin="@dimen/widgetMargin"
-                android:layout_height="wrap_content" />
-
         </RelativeLayout>
     </TableLayout>
 </ScrollView>

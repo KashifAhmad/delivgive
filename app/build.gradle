@@ -80,6 +80,9 @@ dependencies {
     implementation 'com.eyalbira.loadingdots:loading-dots:1.0.2'
     //color picker
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+    //text editor
+    implementation 'jp.wasabeef:richeditor-android:1.2.2'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
