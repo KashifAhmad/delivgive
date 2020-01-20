@@ -3,6 +3,7 @@ package com.techease.ultimatesavings.activities.fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,8 +19,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.techease.ultimatesavings.R;
+import com.techease.ultimatesavings.activities.PatternsActivity;
 import com.techease.ultimatesavings.adapters.CustomImagesAdapter;
+import com.techease.ultimatesavings.adapters.PremiumFlowersDialogAdapter;
 import com.techease.ultimatesavings.models.Images;
+import com.techease.ultimatesavings.models.premiumFlowers.Datum;
+import com.techease.ultimatesavings.models.premiumFlowers.PremiumResponse;
+import com.techease.ultimatesavings.utils.ProgressView;
+import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.richeditor.RichEditor;
 import petrov.kristiyan.colorpicker.ColorPicker;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +56,9 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
     LinearLayout llTemplates;
     RecyclerView rvFlowers;
     CustomImagesAdapter adapter;
+    PremiumFlowersDialogAdapter premiumFlowersAdapter;
     List<Images> imagesList = new ArrayList<>();
+    List<Datum> premiumList = new ArrayList<>();
     public AlertDialog dialog;
     private RichEditor mEditor;
     private TextView mPreview;
@@ -73,8 +84,10 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
         llPatterns.setOnClickListener(this);
         llTexts.setOnClickListener(this);
         llTemplates.setOnClickListener(this);
-
+        premiumFlowersAdapter = new PremiumFlowersDialogAdapter(getActivity(), premiumList);
         initData();
+        initPremium();
+
 
     }
 
@@ -122,6 +135,13 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.llTexts:
                 textEditorDialog(getActivity());
+                break;
+            case R.id.llTemplates:
+                ProgressView.loader(getActivity());
+                premiumFlowersDialog(getActivity());
+                break;
+            case R.id.llPatterns:
+                startActivity(new Intent(getActivity(), PatternsActivity.class));
         }
 
 
@@ -379,5 +399,41 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
 
         return dialog;
     }
+
+    public AlertDialog premiumFlowersDialog(Context context) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.premium_flowers_dialog, null);
+        dialogBuilder.setView(dialogView);
+        rvFlowers = dialogView.findViewById(R.id.rvFlowers);
+        rvFlowers.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        rvFlowers.setAdapter(premiumFlowersAdapter);
+        premiumFlowersAdapter.notifyDataSetChanged();
+        dialog = dialogBuilder.create();
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+
+        return dialog;
+    }
+
+    private void initPremium() {
+        Call<PremiumResponse> flowersResponseCall = BaseNetworking.apiServices().premiumFlowers();
+        flowersResponseCall.enqueue(new Callback<PremiumResponse>() {
+            @Override
+            public void onResponse(Call<PremiumResponse> call, Response<PremiumResponse> response) {
+//                ProgressView.mDialog.dismiss();
+                if (response.isSuccessful()) {
+                    premiumList.addAll(response.body().getData());
+                    premiumFlowersAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PremiumResponse> call, Throwable t) {
+                ProgressView.mDialog.dismiss();
+            }
+        });
+    }
+
 
 }

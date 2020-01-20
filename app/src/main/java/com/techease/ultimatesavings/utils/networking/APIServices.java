@@ -4,6 +4,7 @@ import com.techease.ultimatesavings.models.changePasswordModels.ChangePasswordRe
 import com.techease.ultimatesavings.models.freeFlowersModels.FreeFlowersResponse;
 import com.techease.ultimatesavings.models.loginModels.LoginResponse;
 import com.techease.ultimatesavings.models.genericResponseModel.GenericResponse;
+import com.techease.ultimatesavings.models.premiumFlowers.PremiumResponse;
 import com.techease.ultimatesavings.models.signUpModels.SignUpResponse;
 
 import retrofit2.Call;
@@ -43,7 +44,7 @@ public interface APIServices {
     Call<FreeFlowersResponse> freeFlowers();
 
     @GET("premium_flowers")
-    Call<FreeFlowersResponse> premiumFlowers();
+    Call<PremiumResponse> premiumFlowers();
 
 }
 

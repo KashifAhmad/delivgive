@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="fonts_array">
-        <item><font>"@font/andalusia"</font></item>
+        <item>"Andalusia"</item>
         <item >Poppins</item>
         <item >Phitton</item>
         <item>Selvillia Dreamer</item>

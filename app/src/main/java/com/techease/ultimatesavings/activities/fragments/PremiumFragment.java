@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.adapters.FreeFlowersAdapter;
 import com.techease.ultimatesavings.adapters.PremiumFlowersAdapter;
-import com.techease.ultimatesavings.models.freeFlowersModels.Datum;
-import com.techease.ultimatesavings.models.freeFlowersModels.FreeFlowersResponse;
+import com.techease.ultimatesavings.models.premiumFlowers.Datum;
+import com.techease.ultimatesavings.models.premiumFlowers.PremiumResponse;
 import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
@@ -50,10 +50,10 @@ public class PremiumFragment extends Fragment {
         initData();
     }
     private void initData() {
-        Call<FreeFlowersResponse> flowersResponseCall = BaseNetworking.apiServices().premiumFlowers();
-        flowersResponseCall.enqueue(new Callback<FreeFlowersResponse>() {
+        Call<PremiumResponse> flowersResponseCall = BaseNetworking.apiServices().premiumFlowers();
+        flowersResponseCall.enqueue(new Callback<PremiumResponse>() {
             @Override
-            public void onResponse(Call<FreeFlowersResponse> call, Response<FreeFlowersResponse> response) {
+            public void onResponse(Call<PremiumResponse> call, Response<PremiumResponse> response) {
                 ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()){
                     flowersList.addAll(response.body().getData());
@@ -62,7 +62,7 @@ public class PremiumFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<FreeFlowersResponse> call, Throwable t) {
+            public void onFailure(Call<PremiumResponse> call, Throwable t) {
                 ProgressView.mDialog.dismiss();
 
 
