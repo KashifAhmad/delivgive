@@ -2,6 +2,7 @@ package com.techease.ultimatesavings.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.techease.ultimatesavings.FlowerListener;
 import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.models.Images;
 
@@ -23,13 +25,15 @@ import java.util.List;
 
 public class CustomImagesAdapter extends RecyclerView.Adapter<CustomImagesAdapter.MyViewHolder> {
 
+    FlowerListener flowerListener;
     private Context context;
     private List<Images> flowersList;
     private int lastPosition = -1;
 
-    public CustomImagesAdapter(Context context, List<Images> flowersList) {
+    public CustomImagesAdapter(Context context, List<Images> flowersList, FlowerListener mListener) {
         this.flowersList = flowersList;
         this.context = context;
+        this.flowerListener = mListener;
     }
 
     @Override
@@ -49,6 +53,8 @@ public class CustomImagesAdapter extends RecyclerView.Adapter<CustomImagesAdapte
         holder.ivFlowerImage.setOnClickListener(v -> {
             lastPosition = position;
             notifyDataSetChanged();
+            Log.d("zma image id", String.valueOf(flower.imageId));
+            flowerListener.flowerID(flower.imageId);
 
         });
         if (position == lastPosition) {

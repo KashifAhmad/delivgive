@@ -4,6 +4,19 @@
     android:padding="@dimen/widgetMargin"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/etTextHere"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:maxLength="15"
+        android:inputType="text"
+        android:background="@drawable/round_line_gray_border"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:hint="Enter text here" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,9 +35,11 @@
             android:entries="@array/fonts_array" />
 
         <EditText
+            android:id="@+id/etTextSize"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_margin="10dp"
+            android:inputType="number"
             android:layout_weight="0.3"
             android:singleLine="true"
             android:imeOptions="actionNext"
@@ -72,24 +87,28 @@
         android:layout_marginEnd="@dimen/widgetMargin"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/ivAlignCentre"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="35dp"
             android:padding="10dp"
             android:src="@mipmap/align_center"/>
         <ImageView
+            android:id="@+id/ivAlignJustify"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="35dp"
             android:padding="10dp"
             android:src="@mipmap/align_justify"/>
         <ImageView
+            android:id="@+id/ivAlignLeft"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="35dp"
             android:padding="10dp"
             android:src="@mipmap/align_left"/>
         <ImageView
+            android:id="@+id/ivAlignRight"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="35dp"
@@ -118,5 +137,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:visibility="gone" />
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:text="Done"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginStart="60dp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>

@@ -170,19 +170,20 @@
                 </TableLayout>
             </HorizontalScrollView>
 
-            <ImageView
-                android:id="@+id/ivMainImage"
+            <FrameLayout
+                android:id="@+id/flBouquetSpace"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_below="@id/hsvItems"
-                android:layout_margin="10dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/rectangle" />
+                android:layout_margin="@dimen/screenPadding"
+                android:background="@color/colorPrimary"
+                android:layout_below="@id/hsvItems"/>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ivMainImage"
+                android:layout_below="@id/flBouquetSpace"
                 android:layout_margin="@dimen/widgetMargin"
                 android:orientation="horizontal">
 

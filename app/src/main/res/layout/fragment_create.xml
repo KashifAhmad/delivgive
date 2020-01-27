@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -12,7 +13,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_marginStart="@dimen/screenPadding"
             android:layout_marginEnd="@dimen/screenPadding">
 
@@ -171,6 +171,129 @@
                 </TableLayout>
             </HorizontalScrollView>
 
+            <FrameLayout
+                android:id="@+id/flBouquetSpace"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/screenPadding"
+                android:background="@color/colorPrimary"
+                android:layout_below="@id/hsvItems"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/flBouquetSpace"
+                android:layout_margin="@dimen/widgetMargin"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/llBackToTop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="3dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@color/colorLightPink"
+                        android:padding="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/send_to_back" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Send to Back" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llBack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@color/colorLightPink"
+                        android:padding="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/back" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Back" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llForward"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@color/colorLightPink"
+                        android:padding="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/forward" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="10sp"
+                        android:text="Forward" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llSendToTop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@color/colorLightPink"
+                        android:padding="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/sent_to_top" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Send to top" />
+                </LinearLayout>
+            </LinearLayout>
+
         </RelativeLayout>
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:text="Done"
+            android:layout_margin="60dp"
+            android:layout_marginEnd="@dimen/screenPadding"
+            android:layout_marginStart="@dimen/screenPadding"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite" />
+
     </TableLayout>
 </ScrollView>

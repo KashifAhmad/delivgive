@@ -1,23 +1,39 @@
 package com.techease.ultimatesavings.activities.fragments;
 
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.techease.ultimatesavings.FlowerListener;
 import com.techease.ultimatesavings.R;
 import com.techease.ultimatesavings.activities.PatternsActivity;
 import com.techease.ultimatesavings.adapters.CustomImagesAdapter;
@@ -28,6 +44,9 @@ import com.techease.ultimatesavings.models.premiumFlowers.PremiumResponse;
 import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +61,11 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CreateFragment extends Fragment implements View.OnClickListener {
+public class CreateFragment extends Fragment implements
+        View.OnClickListener,
+        View.OnTouchListener,
+        FlowerListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
     private View view;
     @BindView(R.id.llColors)
     LinearLayout llColors;
@@ -54,6 +77,18 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
     LinearLayout llTexts;
     @BindView(R.id.llTemplates)
     LinearLayout llTemplates;
+    @BindView(R.id.flBouquetSpace)
+    FrameLayout flBouquetSpace;
+    @BindView(R.id.llSendToTop)
+    LinearLayout llSendToTop;
+    @BindView(R.id.llBack)
+    LinearLayout llBack;
+    @BindView(R.id.llBackToTop)
+    LinearLayout llBackToTop;
+    @BindView(R.id.llForward)
+    LinearLayout llForward;
+    @BindView(R.id.btnDone)
+    Button btnDone;
     RecyclerView rvFlowers;
     CustomImagesAdapter adapter;
     PremiumFlowersDialogAdapter premiumFlowersAdapter;
@@ -62,6 +97,12 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
     public AlertDialog dialog;
     private RichEditor mEditor;
     private TextView mPreview;
+    float dX;
+    float dY;
+    int lastAction;
+    private String bouquetText, textSize;
+    private TextView textView;//dynamic textTextView textView
+    private boolean isCentre = false, isJustify = false, isLeft = false, isRight = false;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -84,33 +125,108 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
         llPatterns.setOnClickListener(this);
         llTexts.setOnClickListener(this);
         llTemplates.setOnClickListener(this);
+        llBack.setOnClickListener(this);
+        llBackToTop.setOnClickListener(this);
+        llForward.setOnClickListener(this);
+        llSendToTop.setOnClickListener(this);
+        btnDone.setOnClickListener(this);
         premiumFlowersAdapter = new PremiumFlowersDialogAdapter(getActivity(), premiumList);
         initData();
         initPremium();
+        checkPermission();
 
 
+    }
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1001);
+
+            }
+        } else {
+            // Permission has already been granted
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1001: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 
     public void initData() {
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_52, ""));
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_52, ""));
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_52, ""));
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_52, ""));
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_52, ""));
+        imagesList.add(new Images(R.drawable.white_bucket_flowers, ""));
+        imagesList.add(new Images(R.drawable.red_ghotai_flowers, ""));
+        imagesList.add(new Images(R.drawable.red_bucket_flowers, ""));
+        imagesList.add(new Images(R.drawable.bucket_2_flowers, ""));
+        imagesList.add(new Images(R.drawable.bucket_flowers, ""));
+        imagesList.add(new Images(R.drawable.white_bucket, ""));
+        imagesList.add(new Images(R.drawable.red_gift, ""));
+        imagesList.add(new Images(R.drawable.pick_and_yellow, ""));
+        imagesList.add(new Images(R.drawable.red_and_white, ""));
         imagesList.add(new Images(R.drawable.bouquet_32, ""));
         imagesList.add(new Images(R.drawable.bouquet_52, ""));
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_52, ""));
+        imagesList.add(new Images(R.drawable.pink_flowers, ""));
+        imagesList.add(new Images(R.drawable.group_6, ""));
+        imagesList.add(new Images(R.drawable.group_7, ""));
+        imagesList.add(new Images(R.drawable.group, ""));
 
 
     }
 
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        view.setOnKeyListener(null);
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                dX = view.getX() - event.getRawX();
+                dY = view.getY() - event.getRawY();
+                lastAction = MotionEvent.ACTION_DOWN;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                view.setY(event.getRawY() + dY);
+                view.setX(event.getRawX() + dX);
+                lastAction = MotionEvent.ACTION_MOVE;
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if (lastAction == MotionEvent.ACTION_DOWN)
+//                    Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_SHORT).show();
+                    break;
+            default:
+                return false;
+        }
+        return true;
+    }
 
     @Override
     public void onClick(View v) {
@@ -121,6 +237,7 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
                 colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                     @Override
                     public void onChooseColor(int position, int color) {
+                        flBouquetSpace.setBackgroundColor(color);
                         // put code
                     }
 
@@ -135,6 +252,7 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.llTexts:
                 textEditorDialog(getActivity());
+
                 break;
             case R.id.llTemplates:
                 ProgressView.loader(getActivity());
@@ -142,6 +260,9 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.llPatterns:
                 startActivity(new Intent(getActivity(), PatternsActivity.class));
+                break;
+            case R.id.btnDone:
+                saveBitMap(getActivity(), flBouquetSpace);
         }
 
 
@@ -151,6 +272,43 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.text_editor_dialog, null);
+        EditText etText = dialogView.findViewById(R.id.etTextHere);
+        EditText etTextSize = dialogView.findViewById(R.id.etTextSize);
+        Button btnDone = dialogView.findViewById(R.id.btnDone);
+        ImageView ivAlignCentre = dialogView.findViewById(R.id.ivAlignCentre);
+        ImageView ivAlignJustify = dialogView.findViewById(R.id.ivAlignJustify);
+        ImageView ivAlignLeft = dialogView.findViewById(R.id.ivAlignLeft);
+        ImageView ivAlignRight = dialogView.findViewById(R.id.ivAlignRight);
+        ivAlignCentre.setOnClickListener(v -> {
+            isCentre = true;
+            isJustify = false;
+            isLeft = false;
+            isRight = false;
+            ivAlignCentre.setImageResource(R.mipmap.align_center_selected);
+
+        });
+        ivAlignJustify.setOnClickListener(v -> {
+            isCentre = false;
+            isJustify = true;
+            isLeft = false;
+            isRight = false;
+            ivAlignJustify.setImageResource(R.mipmap.align_justify_selected);
+        });
+        ivAlignLeft.setOnClickListener(v -> {
+            isCentre = false;
+            isJustify = false;
+            isLeft = true;
+            isRight = false;
+            ivAlignLeft.setImageResource(R.mipmap.align_left_selected);
+
+        });
+        ivAlignRight.setOnClickListener(v -> {
+            isCentre = false;
+            isJustify = false;
+            isLeft = false;
+            isRight = true;
+            ivAlignRight.setImageResource(R.mipmap.align_right_selected);
+        });
         dialogBuilder.setView(dialogView);
         mEditor = dialogView.findViewById(R.id.editor);
         mPreview = dialogView.findViewById(R.id.preview);
@@ -166,12 +324,40 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
             // Do Something
             Log.d("RichEditor", "Preview " + text);
         });
-        mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
-            @Override
-            public void onTextChange(String text) {
-                mPreview.setText(text);
+        mEditor.setOnTextChangeListener(text -> mPreview.setText(text));
+        textView = new TextView(getActivity());
+
+        btnDone.setOnClickListener(v -> {
+            bouquetText = etText.getText().toString();
+            textSize = etTextSize.getText().toString();
+            textView.setText(bouquetText);
+            LinearLayout.LayoutParams params = new LinearLayout
+                    .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            textView.setPadding(10, 10, 10, 10);
+            textView.setLayoutParams(params);
+            params.setMargins(30, 0, 30, 0);
+            if (textSize != null) {
+                textView.setTextSize(Float.parseFloat(textSize));
             }
+            flBouquetSpace.addView(textView);
+            textView.setBackground(getResources().getDrawable(R.drawable.round_line_border));
+            if (isCentre) {
+                textView.setGravity(Gravity.CENTER);
+            }
+            if (isJustify) {
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+            }
+            if (isLeft) {
+                textView.setGravity(Gravity.LEFT);
+            }
+            if (isRight) {
+                textView.setGravity(Gravity.RIGHT);
+            }
+            dialog.dismiss();
+            textView.setOnClickListener(v1 -> textEditorDialog(getActivity()));
         });
+        textView.setOnTouchListener(this);
 
 //        ImageButton actionUndo = dialogView.findViewById(R.id.action_undo);
 //        actionUndo.setOnClickListener(new View.OnClickListener() {
@@ -387,10 +573,12 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
         Button btnYes = dialogView.findViewById(R.id.btnDone);
         rvFlowers = dialogView.findViewById(R.id.rvFlowers);
         rvFlowers.setLayoutManager(new GridLayoutManager(getActivity(), 5));
-        adapter = new CustomImagesAdapter(getActivity(), imagesList);
+        adapter = new CustomImagesAdapter(getActivity(), imagesList, this);
         rvFlowers.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         btnYes.setOnClickListener(v -> {
+            dialog.dismiss();
+
 
         });
         dialog = dialogBuilder.create();
@@ -435,5 +623,78 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    @Override
+    public void flowerID(int id) {
+        ImageView imageView = new ImageView(getActivity());
+        LinearLayout.LayoutParams params = new LinearLayout
+                .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        // Add image path from drawable folder.
+        imageView.setImageResource(id);
+
+//        params.width = 100;
+//        params.height = 20;
+        imageView.setLayoutParams(params);
+        flBouquetSpace.addView(imageView);
+        imageView.setOnTouchListener(this);
+
+    }
+
+    private File saveBitMap(Context context, View drawView) {
+        File pictureFileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Delivgive");
+        if (!pictureFileDir.exists()) {
+            boolean isDirectoryCreated = pictureFileDir.mkdirs();
+            if (!isDirectoryCreated)
+                Log.i("ATG", "Can't create directory to save the image");
+            return null;
+        }
+        String filename = pictureFileDir.getPath() + File.separator + System.currentTimeMillis() + ".jpg";
+        File pictureFile = new File(filename);
+        Bitmap bitmap = getBitmapFromView(drawView);
+        try {
+            pictureFile.createNewFile();
+            FileOutputStream oStream = new FileOutputStream(pictureFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, oStream);
+            oStream.flush();
+            oStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.i("TAG", "There was an issue saving the image.");
+        }
+        scanGallery(context, pictureFile.getAbsolutePath());
+        return pictureFile;
+    }
+
+    //create bitmap from view and returns it
+    private Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null) {
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        } else {
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        }
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
+    }
+
+    // used for scanning gallery
+    private void scanGallery(Context cntx, String path) {
+        try {
+            MediaScannerConnection.scanFile(cntx, new String[]{path}, null, new MediaScannerConnection.OnScanCompletedListener() {
+                public void onScanCompleted(String path, Uri uri) {
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
