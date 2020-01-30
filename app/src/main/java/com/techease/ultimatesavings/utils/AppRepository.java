@@ -22,6 +22,9 @@ public class AppRepository {
     public static String mAPIToken(Context context) {
         return mGetValue(context).getString("auth_token", "");
     }
+    public static String mBouquetLink(Context context) {
+        return mGetValue(context).getString("mBouquetLink", "");
+    }
     public static String mUserEmail(Context context) {
         return mGetValue(context).getString("email", "");
     }
@@ -35,8 +38,8 @@ public class AppRepository {
     public static String mLng(Context context) {
         return mGetValue(context).getString("lng", "");
     }
-    public static String mUserID(Context context) {
-        return mGetValue(context).getString("userID", "");
+    public static Integer mUserID(Context context) {
+        return mGetValue(context).getInt("userID", 0);
     }
     public static String mDeviceToken(Context context) {
         return mGetValue(context).getString("device_token", "");

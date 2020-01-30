@@ -83,6 +83,7 @@ dependencies {
     //text editor
     implementation 'jp.wasabeef:richeditor-android:1.2.2'
 
+
 }
 
 apply plugin: 'com.google.gms.google-services'

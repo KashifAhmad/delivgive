@@ -139,6 +139,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if (response.isSuccessful()) {
                     startActivity(new Intent(getActivity(), MainBottomNavActivity.class));
                     AppRepository.mPutValue(getActivity()).putBoolean("loggedIn", true).commit();
+                    AppRepository.mPutValue(getActivity()).putInt("userID", response.body().getData().getId()).commit();
                     getActivity().finishAffinity();
                 } else {
                     JSONObject jsonObject = null;

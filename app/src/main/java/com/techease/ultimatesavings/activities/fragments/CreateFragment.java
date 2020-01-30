@@ -35,12 +35,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.techease.ultimatesavings.FlowerListener;
 import com.techease.ultimatesavings.R;
-import com.techease.ultimatesavings.activities.PatternsActivity;
+import com.techease.ultimatesavings.activities.SendBouquetActivity;
 import com.techease.ultimatesavings.adapters.CustomImagesAdapter;
 import com.techease.ultimatesavings.adapters.PremiumFlowersDialogAdapter;
 import com.techease.ultimatesavings.models.Images;
 import com.techease.ultimatesavings.models.premiumFlowers.Datum;
 import com.techease.ultimatesavings.models.premiumFlowers.PremiumResponse;
+import com.techease.ultimatesavings.utils.AppRepository;
 import com.techease.ultimatesavings.utils.ProgressView;
 import com.techease.ultimatesavings.utils.networking.BaseNetworking;
 
@@ -101,8 +102,10 @@ public class CreateFragment extends Fragment implements
     float dY;
     int lastAction;
     private String bouquetText, textSize;
+    private int imageID;
     private TextView textView;//dynamic textTextView textView
-    private boolean isCentre = false, isJustify = false, isLeft = false, isRight = false;
+    private boolean isCentre = false, isJustify = false,
+            isLeft = false, isRight = false, isMotionEventCalled = false;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -206,22 +209,29 @@ public class CreateFragment extends Fragment implements
     public boolean onTouch(View view, MotionEvent event) {
         view.setOnKeyListener(null);
         switch (event.getActionMasked()) {
+
             case MotionEvent.ACTION_DOWN:
                 dX = view.getX() - event.getRawX();
                 dY = view.getY() - event.getRawY();
                 lastAction = MotionEvent.ACTION_DOWN;
+                isMotionEventCalled = true;
+
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 view.setY(event.getRawY() + dY);
                 view.setX(event.getRawX() + dX);
                 lastAction = MotionEvent.ACTION_MOVE;
+                isMotionEventCalled = true;
+
                 break;
 
             case MotionEvent.ACTION_UP:
                 if (lastAction == MotionEvent.ACTION_DOWN)
+                    isMotionEventCalled = true;
+
 //                    Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_SHORT).show();
-                    break;
+                break;
             default:
                 return false;
         }
@@ -259,10 +269,13 @@ public class CreateFragment extends Fragment implements
                 premiumFlowersDialog(getActivity());
                 break;
             case R.id.llPatterns:
-                startActivity(new Intent(getActivity(), PatternsActivity.class));
+                flowersDialog(getActivity());
+
+//                startActivity(new Intent(getActivity(), PatternsActivity.class));
                 break;
             case R.id.btnDone:
                 saveBitMap(getActivity(), flBouquetSpace);
+                startActivity(new Intent(getActivity(), SendBouquetActivity.class));
         }
 
 
@@ -284,6 +297,9 @@ public class CreateFragment extends Fragment implements
             isJustify = false;
             isLeft = false;
             isRight = false;
+            ivAlignJustify.setImageResource(R.mipmap.align_justify);
+            ivAlignLeft.setImageResource(R.mipmap.align_left);
+            ivAlignRight.setImageResource(R.mipmap.align_right);
             ivAlignCentre.setImageResource(R.mipmap.align_center_selected);
 
         });
@@ -292,6 +308,9 @@ public class CreateFragment extends Fragment implements
             isJustify = true;
             isLeft = false;
             isRight = false;
+            ivAlignCentre.setImageResource(R.mipmap.align_center);
+            ivAlignLeft.setImageResource(R.mipmap.align_left);
+            ivAlignRight.setImageResource(R.mipmap.align_right);
             ivAlignJustify.setImageResource(R.mipmap.align_justify_selected);
         });
         ivAlignLeft.setOnClickListener(v -> {
@@ -299,6 +318,9 @@ public class CreateFragment extends Fragment implements
             isJustify = false;
             isLeft = true;
             isRight = false;
+            ivAlignCentre.setImageResource(R.mipmap.align_center);
+            ivAlignJustify.setImageResource(R.mipmap.align_justify);
+            ivAlignRight.setImageResource(R.mipmap.align_right);
             ivAlignLeft.setImageResource(R.mipmap.align_left_selected);
 
         });
@@ -307,6 +329,9 @@ public class CreateFragment extends Fragment implements
             isJustify = false;
             isLeft = false;
             isRight = true;
+            ivAlignCentre.setImageResource(R.mipmap.align_center);
+            ivAlignLeft.setImageResource(R.mipmap.align_left);
+            ivAlignJustify.setImageResource(R.mipmap.align_justify);
             ivAlignRight.setImageResource(R.mipmap.align_right_selected);
         });
         dialogBuilder.setView(dialogView);
@@ -337,25 +362,35 @@ public class CreateFragment extends Fragment implements
             textView.setPadding(10, 10, 10, 10);
             textView.setLayoutParams(params);
             params.setMargins(30, 0, 30, 0);
-            if (textSize != null) {
+            if (textSize.length() > 0) {
                 textView.setTextSize(Float.parseFloat(textSize));
             }
             flBouquetSpace.addView(textView);
             textView.setBackground(getResources().getDrawable(R.drawable.round_line_border));
             if (isCentre) {
                 textView.setGravity(Gravity.CENTER);
+                etText.setGravity(Gravity.CENTER);
             }
             if (isJustify) {
                 textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                etText.setGravity(Gravity.CENTER_HORIZONTAL);
             }
             if (isLeft) {
                 textView.setGravity(Gravity.LEFT);
+                etText.setGravity(Gravity.LEFT);
             }
             if (isRight) {
                 textView.setGravity(Gravity.RIGHT);
+                etText.setGravity(Gravity.CENTER);
             }
             dialog.dismiss();
-            textView.setOnClickListener(v1 -> textEditorDialog(getActivity()));
+            if (isMotionEventCalled) {
+
+            } else {
+                textView.setOnClickListener(v1 -> textEditorDialog(getActivity()));
+            }
+
+
         });
         textView.setOnTouchListener(this);
 
@@ -578,6 +613,13 @@ public class CreateFragment extends Fragment implements
         adapter.notifyDataSetChanged();
         btnYes.setOnClickListener(v -> {
             dialog.dismiss();
+            ImageView imageView = new ImageView(getActivity());
+            LinearLayout.LayoutParams params = new LinearLayout
+                    .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            imageView.setImageResource(imageID);
+            imageView.setLayoutParams(params);
+            flBouquetSpace.addView(imageView);
+            imageView.setOnTouchListener(this);
 
 
         });
@@ -625,19 +667,7 @@ public class CreateFragment extends Fragment implements
 
     @Override
     public void flowerID(int id) {
-        ImageView imageView = new ImageView(getActivity());
-        LinearLayout.LayoutParams params = new LinearLayout
-                .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        // Add image path from drawable folder.
-        imageView.setImageResource(id);
-
-//        params.width = 100;
-//        params.height = 20;
-        imageView.setLayoutParams(params);
-        flBouquetSpace.addView(imageView);
-        imageView.setOnTouchListener(this);
-
+        imageID = id;
     }
 
     private File saveBitMap(Context context, View drawView) {
@@ -649,6 +679,8 @@ public class CreateFragment extends Fragment implements
             return null;
         }
         String filename = pictureFileDir.getPath() + File.separator + System.currentTimeMillis() + ".jpg";
+        Log.d("zma pic path", filename);
+        AppRepository.mPutValue(getActivity()).putString("picPath", filename).commit();
         File pictureFile = new File(filename);
         Bitmap bitmap = getBitmapFromView(drawView);
         try {
