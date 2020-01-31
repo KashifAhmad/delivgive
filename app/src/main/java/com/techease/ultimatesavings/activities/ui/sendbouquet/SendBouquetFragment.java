@@ -1,7 +1,9 @@
 package com.techease.ultimatesavings.activities.ui.sendbouquet;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +117,10 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
             @Override
             public void onResponse(Call<SendBouquetResponse> call, Response<SendBouquetResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Please forward the bouquet link", Toast.LENGTH_SHORT).show();
+                    Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                    sendIntent.setData(Uri.parse("smsto:"+toPhone));
+                    sendIntent.putExtra("sms_body", response.body().getData().getImage());
+                    startActivity(sendIntent);
                     AppRepository.mPutValue(getActivity()).putString("mBouquetLink", response.body().getData().getImage()).commit();
                 }
             }
