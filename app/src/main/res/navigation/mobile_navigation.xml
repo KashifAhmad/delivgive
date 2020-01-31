@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.techease.ultimatesavings.activities.fragments.PremiumFragment"
+        android:name="com.techease.delivgive.activities.fragments.PremiumFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_premium" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.techease.ultimatesavings.activities.fragments.FreeFlowersFragment"
+        android:name="com.techease.delivgive.activities.fragments.FreeFlowersFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_free_flowers" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.techease.ultimatesavings.activities.fragments.NotificationsFragment"
+        android:name="com.techease.delivgive.activities.fragments.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

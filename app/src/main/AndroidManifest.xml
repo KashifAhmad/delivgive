@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.techease.ultimatesavings">
+    package="com.techease.delivgive">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -11,33 +11,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SendBouquetActivity"></activity>
-        <activity android:name=".activities.DragableView" />
-        <activity android:name=".activities.PatternsActivity" />
+        <activity android:name="com.techease.delivgive.activities.SendBouquetActivity"></activity>
+        <activity android:name="com.techease.delivgive.activities.DragableView" />
+        <activity android:name="com.techease.delivgive.activities.PatternsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/fonts_array" />
 
-        <activity android:name=".activities.AccountSettingActivity" />
-        <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.ui.CheckOutActivity" />
-        <activity android:name=".activities.AddCardActivity" />
-        <activity android:name=".activities.PaymentOptionActivity" />
-        <activity android:name=".activities.MakeAccountPremiumActivity" />
-        <activity android:name=".activities.onBoardScreens.FirstIntroScreenActivity" />
-        <activity android:name=".activities.ChangePasswordActivity" />
-        <activity android:name=".activities.VerifyCodeActivity" />
-        <activity android:name=".activities.ForgotPasswordSuccessMsgActivity" />
-        <activity android:name=".activities.ForgotPasswordActivity" />
+        <activity android:name="com.techease.delivgive.activities.AccountSettingActivity" />
+        <activity android:name="com.techease.delivgive.activities.SettingsActivity" />
+        <activity android:name="com.techease.delivgive.activities.ui.CheckOutActivity" />
+        <activity android:name="com.techease.delivgive.activities.AddCardActivity" />
+        <activity android:name="com.techease.delivgive.activities.PaymentOptionActivity" />
+        <activity android:name="com.techease.delivgive.activities.MakeAccountPremiumActivity" />
+        <activity android:name="com.techease.delivgive.activities.onBoardScreens.FirstIntroScreenActivity" />
+        <activity android:name="com.techease.delivgive.activities.ChangePasswordActivity" />
+        <activity android:name="com.techease.delivgive.activities.VerifyCodeActivity" />
+        <activity android:name="com.techease.delivgive.activities.ForgotPasswordSuccessMsgActivity" />
+        <activity android:name="com.techease.delivgive.activities.ForgotPasswordActivity" />
         <activity
-            android:name=".activities.MainBottomNavActivity"
+            android:name="com.techease.delivgive.activities.MainBottomNavActivity"
             android:label="@string/title_activity_main_bottom_nav" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.SignUpActivity" />
-        <activity android:name=".activities.LoginSignupSelectionActivity" />
-        <activity android:name=".activities.onBoardScreens.SecondIntroScreenActivity" />
-        <activity android:name=".activities.SplashScreenActivity">
+        <activity android:name="com.techease.delivgive.activities.LoginActivity" />
+        <activity android:name="com.techease.delivgive.activities.SignUpActivity" />
+        <activity android:name="com.techease.delivgive.activities.LoginSignupSelectionActivity" />
+        <activity android:name="com.techease.delivgive.activities.onBoardScreens.SecondIntroScreenActivity" />
+        <activity android:name="com.techease.delivgive.activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,12 +45,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".utils.firebase.MyFirebaseMessagingService">
+        <service android:name="com.techease.delivgive.utils.firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".utils.firebase.MyJobService" />
+        <service android:name="com.techease.delivgive.utils.firebase.MyJobService" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
