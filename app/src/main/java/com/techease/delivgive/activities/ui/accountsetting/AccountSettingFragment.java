@@ -40,7 +40,6 @@ public class AccountSettingFragment extends Fragment implements View.OnClickList
     Button btnSave;
     private View view;
     private String fullName, DOB, emailAddress, phoneNumber;
-    private boolean valid = false;
 
     public static AccountSettingFragment newInstance() {
         return new AccountSettingFragment();
@@ -84,7 +83,7 @@ public class AccountSettingFragment extends Fragment implements View.OnClickList
     }
 
     private boolean isValid() {
-        valid = true;
+        boolean valid = true;
         fullName = etFullName.getText().toString();
         DOB = etDOB.getText().toString();
         emailAddress = etEmail.getText().toString();
