@@ -22,11 +22,17 @@ public class AppRepository {
     public static String mAPIToken(Context context) {
         return mGetValue(context).getString("auth_token", "");
     }
+    public static String mUserProfilePic(Context context) {
+        return mGetValue(context).getString("profilePic", "");
+    }
     public static String mBouquetLink(Context context) {
         return mGetValue(context).getString("mBouquetLink", "");
     }
     public static String mUserEmail(Context context) {
-        return mGetValue(context).getString("email", "");
+        return mGetValue(context).getString("mUserEmail", "");
+    }
+    public static String mUserName(Context context) {
+        return mGetValue(context).getString("mUserName", "");
     }
     public static String mSubscriptionType(Context context) {
         return mGetValue(context).getString("subsType", "");

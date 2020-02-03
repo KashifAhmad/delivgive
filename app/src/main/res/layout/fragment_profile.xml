@@ -35,11 +35,13 @@
         android:layout_centerHorizontal="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civProfile"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@mipmap/paterns" />
 
         <ImageView
+            android:id="@+id/ivChangeProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right|center_vertical"

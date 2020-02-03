@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.techease.delivgive.R;
+import com.techease.delivgive.activities.AccountSettingActivity;
 import com.techease.delivgive.activities.LoginSignupSelectionActivity;
 import com.techease.delivgive.utils.AppRepository;
 
@@ -24,6 +26,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     Button btnLogout;
     @BindView(R.id.ivBack)
     ImageView ivBack;
+    @BindView(R.id.llAccountSettings)
+    LinearLayout llAccountSettings;
     private View view;
 
     public static SettingsFragment newInstance() {
@@ -43,6 +47,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         btnLogout.setOnClickListener(this);
         ivBack.setOnClickListener(this);
+        llAccountSettings.setOnClickListener(this);
     }
 
     @Override
@@ -52,6 +57,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 AppRepository.mPutValue(getActivity()).putBoolean("loggedIn", false).commit();
                 getActivity().finishAffinity();
                 startActivity(new Intent(getActivity(), LoginSignupSelectionActivity.class));
+                break;
+            case R.id.llAccountSettings:
+                startActivity(new Intent(getActivity(), AccountSettingActivity.class));
                 break;
             case R.id.ivBack:
                 getActivity().onBackPressed();

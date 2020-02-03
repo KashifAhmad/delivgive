@@ -7,15 +7,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.techease.delivgive.R;
+import com.techease.delivgive.models.profileBodyUpdateModels.ProfileBodyUpdateResponse;
+import com.techease.delivgive.utils.AppRepository;
+import com.techease.delivgive.utils.networking.BaseNetworking;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AccountSettingFragment extends Fragment implements View.OnClickListener {
 
@@ -52,11 +59,27 @@ public class AccountSettingFragment extends Fragment implements View.OnClickList
         ButterKnife.bind(this, view);
         ivBack.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+        etFullName.setText(AppRepository.mUserName(getActivity()));
+        etEmail.setText(AppRepository.mUserEmail(getActivity()));
+        etDOB.setText(AppRepository.mGetValue(getActivity()).getString("mUserDoB", ""));
+        etPhone.setText(AppRepository.mGetValue(getActivity()).getString("mUserPhoneNumber", ""));
+
     }
 
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ivBack:
+                getActivity().onBackPressed();
+                break;
+            case R.id.btnSave:
+                if (isValid()) {
+                    updateProfile();
+                }
+                break;
+
+        }
 
     }
 
@@ -84,7 +107,7 @@ public class AccountSettingFragment extends Fragment implements View.OnClickList
         } else {
             etEmail.setError(null);
         }
-        if (!phoneNumber.isEmpty()) {
+        if (phoneNumber.isEmpty()) {
             etPhone.setError("Please enter a valid phone number");
             valid = false;
         } else {
@@ -92,5 +115,29 @@ public class AccountSettingFragment extends Fragment implements View.OnClickList
         }
 
         return valid;
+    }
+
+    private void updateProfile() {
+        Call<ProfileBodyUpdateResponse> updateResponse = BaseNetworking.apiServices().updateProfile(AppRepository.mUserID(getActivity()),
+                fullName, DOB, emailAddress, phoneNumber);
+        updateResponse.enqueue(new Callback<ProfileBodyUpdateResponse>() {
+            @Override
+            public void onResponse(Call<ProfileBodyUpdateResponse> call, Response<ProfileBodyUpdateResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    AppRepository.mPutValue(getActivity()).putString("mUserName", response.body().getData().getFullname()).commit();
+                    AppRepository.mPutValue(getActivity()).putString("mUserEmail", response.body().getData().getEmail()).commit();
+                    AppRepository.mPutValue(getActivity()).putString("mUserPhoneNumber", response.body().getData().getPhoneNumber()).commit();
+                    AppRepository.mPutValue(getActivity()).putString("mUserDoB", response.body().getData().getDob()).commit();
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileBodyUpdateResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

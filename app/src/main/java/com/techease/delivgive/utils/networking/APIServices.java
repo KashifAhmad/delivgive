@@ -3,8 +3,11 @@ package com.techease.delivgive.utils.networking;
 import com.techease.delivgive.models.changePasswordModels.ChangePasswordResponse;
 import com.techease.delivgive.models.freeFlowersModels.FreeFlowersResponse;
 import com.techease.delivgive.models.genericResponseModel.GenericResponse;
+import com.techease.delivgive.models.getUserProfileModel.GetUserProfileResponse;
 import com.techease.delivgive.models.loginModels.LoginResponse;
 import com.techease.delivgive.models.premiumFlowers.PremiumResponse;
+import com.techease.delivgive.models.profileBodyUpdateModels.ProfileBodyUpdateResponse;
+import com.techease.delivgive.models.profilePicUpdateModels.ProfilePicUpdateResponse;
 import com.techease.delivgive.models.sendBouquetModels.SendBouquetResponse;
 import com.techease.delivgive.models.signUpModels.SignUpResponse;
 
@@ -17,6 +20,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIServices {
     @FormUrlEncoded
@@ -48,6 +53,7 @@ public interface APIServices {
     @GET("free_flowers")
     Call<FreeFlowersResponse> freeFlowers();
 
+
     @GET("premium_flowers")
     Call<PremiumResponse> premiumFlowers();
 
@@ -55,12 +61,27 @@ public interface APIServices {
     @POST("send")
     Call<SendBouquetResponse> sendBouquet(@Part("user_id") RequestBody userID,
                                           @Part MultipartBody.Part photo,
-                                          @Part("image") RequestBody profilePicture,
+                                          @Part("image") RequestBody bouquetPic,
                                           @Part("image_from") RequestBody imageFrom,
                                           @Part("image_to") RequestBody imageTo,
                                           @Part("from_phone_number") RequestBody phoneNumberFrom,
                                           @Part("to_phone_number") RequestBody phoneNumberTo,
                                           @Part("description") RequestBody description);
+    @Multipart
+    @POST("profilePicture")
+    Call<ProfilePicUpdateResponse> profilePicUpdate(@Part("user_id") RequestBody userID,
+                                                    @Part MultipartBody.Part photo,
+                                                    @Part("profile_picture") RequestBody profilePic);
+    @GET("user/{id}")
+    Call<GetUserProfileResponse> getUserProfile(@Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("UpdateProfile")
+    Call<ProfileBodyUpdateResponse> updateProfile(@Field("user_id") int id,
+                                                  @Field("fullName") String fullName,
+                                                  @Field("dob") String dob,
+                                                  @Field("email") String email,
+                                                  @Field("phone_number") String phoneNumber);
 
 }
 
