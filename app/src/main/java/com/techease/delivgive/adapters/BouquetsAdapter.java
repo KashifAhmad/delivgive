@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.techease.delivgive.R;
+import com.techease.delivgive.activities.MakeAccountPremiumActivity;
 import com.techease.delivgive.activities.SendBouquetActivity;
-import com.techease.delivgive.models.freeFlowersModels.Datum;
+import com.techease.delivgive.models.getBouquetsModels.Datum;
 import com.techease.delivgive.utils.AppRepository;
 
 import java.util.List;
@@ -23,13 +25,13 @@ import java.util.List;
  * Created by kashif on 4/9/19.
  */
 
-public class FreeFlowersAdapter extends RecyclerView.Adapter<FreeFlowersAdapter.MyViewHolder> {
+public class BouquetsAdapter extends RecyclerView.Adapter<BouquetsAdapter.MyViewHolder> {
 
     private Context context;
-    private List<Datum> flowersList;
+    private List<com.techease.delivgive.models.getBouquetsModels.Datum> flowersList;
 
 
-    public FreeFlowersAdapter(Context context, List<Datum> flowersList) {
+    public BouquetsAdapter(Context context, List<com.techease.delivgive.models.getBouquetsModels.Datum> flowersList) {
         this.flowersList = flowersList;
         this.context = context;
     }
@@ -45,17 +47,18 @@ public class FreeFlowersAdapter extends RecyclerView.Adapter<FreeFlowersAdapter.
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Datum flower = flowersList.get(position);
-        holder.tvName.setText(flower.getFlowerName());
-        holder.tvFree.setText(flower.getTitle());
-        Picasso.get().load(flower.getFlowerImage()).into(holder.ivFlowerImage);
-        holder.ivFlowerImage.setOnClickListener(new View.OnClickListener() {
+        holder.tvName.setText(flower.getBucketTitle());
+//        holder.tvFree.setText(flower.getBucketTitle());
+        Picasso.get().load(flower.getBucketImage()).into(holder.ivFlowerImage);
+        holder.rlParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppRepository.mPutValue(context).putBoolean("fromFree", true).commit();
-                AppRepository.mPutValue(context).putString("picLink", flower.getFlowerImage()).commit();
+                AppRepository.mPutValue(context).putString("picLink", flower.getBucketImage()).commit();
                 context.startActivity(new Intent(context, SendBouquetActivity.class));
             }
         });
+
 
 
     }
@@ -69,12 +72,14 @@ public class FreeFlowersAdapter extends RecyclerView.Adapter<FreeFlowersAdapter.
 
         TextView tvName, tvFree;
         ImageView ivFlowerImage;
+        RelativeLayout rlParent;
 
         MyViewHolder(View view) {
             super(view);
             tvName = view.findViewById(R.id.tvFlowerName);
             tvFree = view.findViewById(R.id.tvFree);
             ivFlowerImage = view.findViewById(R.id.ivFlower);
+            rlParent = view.findViewById(R.id.rlParent);
 
 
         }

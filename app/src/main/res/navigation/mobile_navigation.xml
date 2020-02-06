@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.techease.delivgive.activities.fragments.NotificationsFragment"
+        android:name="com.techease.delivgive.activities.fragments.BouquetsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_bouquet" />
 </navigation>

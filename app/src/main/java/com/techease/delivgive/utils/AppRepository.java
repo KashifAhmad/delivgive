@@ -82,6 +82,10 @@ public class AppRepository {
         return mGetValue(context).getBoolean("loggedIn", false);
 
     }
+    public static boolean isFree(Context context) {
+        return mGetValue(context).getBoolean("fromFree", false);
+
+    }
     public static boolean isProUser(Context context) {
         return mGetValue(context).getBoolean("isPro", false);
 

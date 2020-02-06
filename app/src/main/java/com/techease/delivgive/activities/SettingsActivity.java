@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.techease.delivgive.R;
-import com.techease.delivgive.activities.ui.settings.SettingsFragment;
+import com.techease.delivgive.activities.ui.settings.SettingsMenuFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -15,7 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, SettingsFragment.newInstance())
+                    .replace(R.id.container, SettingsMenuFragment.newInstance())
                     .commitNow();
         }
     }

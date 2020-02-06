@@ -42,7 +42,9 @@
                 android:id="@+id/ivBouquet"
                 android:layout_below="@id/tvLetsCreate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/screenPadding"
                 android:src="@drawable/bouquet_52"/>
             <EditText
                 android:id="@+id/etFrom"
@@ -65,6 +67,7 @@
                 android:singleLine="true"
                 android:paddingBottom="20dp"
                 android:inputType="phone"
+                android:maxLength="20"
                 android:imeOptions="actionNext"
                 android:layout_below="@id/etFrom"
                 android:layout_marginBottom="@dimen/widgetMargin"
@@ -89,6 +92,7 @@
                 android:backgroundTint="@color/black"
                 android:singleLine="true"
                 android:paddingBottom="20dp"
+                android:maxLength="20"
                 android:inputType="phone"
                 android:imeOptions="actionNext"
                 android:layout_below="@id/etTo"

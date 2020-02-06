@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.techease.delivgive.R;
+import com.techease.delivgive.activities.fragments.BouquetsFragment;
 import com.techease.delivgive.activities.fragments.CreateFragment;
 import com.techease.delivgive.activities.fragments.FreeFlowersFragment;
 import com.techease.delivgive.activities.fragments.PremiumFragment;
@@ -27,7 +28,7 @@ public class MainBottomNavActivity extends AppCompatActivity {
                 ViewChanger.fragmentChanger(MainBottomNavActivity.this, new CreateFragment(), R.id.container);
                 return true;
             case R.id.navBouquets:
-                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+                ViewChanger.fragmentChanger(MainBottomNavActivity.this, new BouquetsFragment(), R.id.container);
                 return true;
             case R.id.navProfile:
                 ViewChanger.fragmentChanger(MainBottomNavActivity.this, new ProfileFragment(), R.id.container);
@@ -44,7 +45,7 @@ public class MainBottomNavActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navCreate);
+        navigation.setSelectedItemId(R.id.navFree);
     }
 
 }

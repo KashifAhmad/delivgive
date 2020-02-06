@@ -38,14 +38,14 @@
             android:id="@+id/civProfile"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@mipmap/paterns" />
+            android:padding="20dp" />
 
         <ImageView
             android:id="@+id/ivChangeProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginStart="50dp"
+            android:padding="5dp"
+            android:layout_gravity="end|center_vertical"
             android:src="@mipmap/change_image_button" />
     </FrameLayout>
 
@@ -88,6 +88,7 @@
         android:id="@+id/rvRecentlyUsed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:layout_below="@id/tvRecentlyUsed"
         android:layout_marginTop="@dimen/widgetMargin" />
 

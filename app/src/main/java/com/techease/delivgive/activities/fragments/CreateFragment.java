@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -43,6 +44,7 @@ import com.techease.delivgive.models.premiumFlowers.Datum;
 import com.techease.delivgive.models.premiumFlowers.PremiumResponse;
 import com.techease.delivgive.utils.AppRepository;
 import com.techease.delivgive.utils.ProgressView;
+import com.techease.delivgive.utils.TouchImageView;
 import com.techease.delivgive.utils.networking.BaseNetworking;
 
 import java.io.File;
@@ -201,8 +203,6 @@ public class CreateFragment extends Fragment implements
         imagesList.add(new Images(R.drawable.group_6, ""));
         imagesList.add(new Images(R.drawable.group_7, ""));
         imagesList.add(new Images(R.drawable.group, ""));
-
-
     }
 
     @Override
@@ -235,6 +235,7 @@ public class CreateFragment extends Fragment implements
             default:
                 return false;
         }
+
         return true;
     }
 
@@ -600,11 +601,13 @@ public class CreateFragment extends Fragment implements
         return dialog;
     }
 
+
     public AlertDialog flowersDialog(Context context) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.flowers_dialog, null);
         dialogBuilder.setView(dialogView);
+
         Button btnYes = dialogView.findViewById(R.id.btnDone);
         rvFlowers = dialogView.findViewById(R.id.rvFlowers);
         rvFlowers.setLayoutManager(new GridLayoutManager(getActivity(), 5));
@@ -613,7 +616,9 @@ public class CreateFragment extends Fragment implements
         adapter.notifyDataSetChanged();
         btnYes.setOnClickListener(v -> {
             dialog.dismiss();
-            ImageView imageView = new ImageView(getActivity());
+//            PhotoView imageView = new PhotoView(getActivity());
+            TouchImageView imageView = new TouchImageView(getActivity());
+//            ImageView imageView = new ImageView(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout
                     .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             imageView.setImageResource(imageID);
@@ -671,7 +676,7 @@ public class CreateFragment extends Fragment implements
     }
 
     private File saveBitMap(Context context, View drawView) {
-        File pictureFileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Delivgive");
+        File pictureFileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
         if (!pictureFileDir.exists()) {
             boolean isDirectoryCreated = pictureFileDir.mkdirs();
             if (!isDirectoryCreated)

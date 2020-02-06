@@ -23,9 +23,14 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.techease.delivgive.R;
+import com.techease.delivgive.adapters.RecentlySentAdapters;
+import com.techease.delivgive.models.getUserBuckets.Datum;
+import com.techease.delivgive.models.getUserBuckets.GetUserBucketsResponse;
 import com.techease.delivgive.models.getUserProfileModel.GetUserProfileResponse;
 import com.techease.delivgive.models.profilePicUpdateModels.ProfilePicUpdateResponse;
 import com.techease.delivgive.utils.AppRepository;
@@ -36,6 +41,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,8 +74,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     TextView tvUserName;
     @BindView(R.id.tvLocation)
     TextView tvLocation;
+    @BindView(R.id.rvRecentlyUsed)
+    RecyclerView rvRecentlySent;
     private View view;
     private File sourceFile;
+    List<Datum> bucketsList = new ArrayList<>();
+    RecentlySentAdapters adapters;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -98,6 +110,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             Picasso.get().load(AppRepository.mUserProfilePic(getActivity())).into(civProfile);
         }
         getUserProfile();
+
+        rvRecentlySent.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        adapters = new RecentlySentAdapters(getActivity(), bucketsList);
+        rvRecentlySent.setAdapter(adapters);
+        getBuckets();
+    }
+
+    private void getBuckets() {
+        Call<GetUserBucketsResponse> buckets = BaseNetworking.apiServices().userBuckets(AppRepository.mUserID(getActivity()));
+        buckets.enqueue(new Callback<GetUserBucketsResponse>() {
+            @Override
+            public void onResponse(Call<GetUserBucketsResponse> call, Response<GetUserBucketsResponse> response) {
+                if (response.isSuccessful()) {
+                    bucketsList.addAll(response.body().getData());
+                    adapters.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUserBucketsResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -246,12 +281,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         });
 
     }
-    private void getUserProfile(){
+
+    private void getUserProfile() {
         Call<GetUserProfileResponse> userProfile = BaseNetworking.apiServices().getUserProfile(AppRepository.mUserID(getActivity()));
         userProfile.enqueue(new Callback<GetUserProfileResponse>() {
             @Override
             public void onResponse(Call<GetUserProfileResponse> call, Response<GetUserProfileResponse> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     AppRepository.mPutValue(getActivity()).putString("mUserName", response.body().getData().get(0).getFullname()).commit();
                     AppRepository.mPutValue(getActivity()).putString("mUserEmail", response.body().getData().get(0).getEmail()).commit();
                     AppRepository.mPutValue(getActivity()).putString("mUserPhoneNumber", response.body().getData().get(0).getPhoneNumber()).commit();

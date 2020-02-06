@@ -84,6 +84,7 @@ dependencies {
     implementation 'jp.wasabeef:richeditor-android:1.2.2'
 
 
+
 }
 
 repositories {

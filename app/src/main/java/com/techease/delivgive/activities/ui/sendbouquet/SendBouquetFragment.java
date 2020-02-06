@@ -1,10 +1,18 @@
 package com.techease.delivgive.activities.ui.sendbouquet;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +25,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.squareup.picasso.Picasso;
 import com.techease.delivgive.R;
 import com.techease.delivgive.models.sendBouquetModels.SendBouquetResponse;
 import com.techease.delivgive.utils.AppRepository;
 import com.techease.delivgive.utils.Connectivity;
+import com.techease.delivgive.utils.ProgressView;
 import com.techease.delivgive.utils.networking.BaseNetworking;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +52,8 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
 
     private SendBouquetViewModel mViewModel;
     private View view;
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
     @BindView(R.id.ivBouquet)
     ImageView ivBouquet;
     @BindView(R.id.etFrom)
@@ -53,8 +68,8 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
     EditText etDescription;
     @BindView(R.id.btnSendNow)
     Button btnSendNow;
-    private String fromName, fromPhone, toName, toPhone, description;
-    private File imgFile;
+    private String fromName, fromPhone, toName, toPhone, description, freeFilePath;
+    private File imgFile, freeImageFile;
     private boolean valid = false;
 
     public static SendBouquetFragment newInstance() {
@@ -73,10 +88,20 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
     private void initUI() {
         ButterKnife.bind(this, view);
         btnSendNow.setOnClickListener(this);
-        imgFile = new File(AppRepository.mGetValue(getActivity()).getString("picPath", ""));
+        ivBack.setOnClickListener(this);
+        if (AppRepository.isFree(getActivity()) && ivBouquet.getDrawable() != null) {
+            Picasso.get().load(AppRepository.mGetValue(getActivity()).getString("picLink", "")).into(ivBouquet);
+            saveImage(ivBouquet);
+//            saveBitMap(getActivity(), ivBouquet);
+            AppRepository.mPutValue(getActivity()).putBoolean("fromFree", false).commit();
+        }else {
+            imgFile = new File(AppRepository.mGetValue(getActivity()).getString("picPath", ""));
+        }
         if (imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             ivBouquet.setImageBitmap(myBitmap);
+
+
         }
     }
 
@@ -93,11 +118,47 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
             case R.id.btnSendNow:
                 if (isValid()) {
                     if (Connectivity.isConnected(getActivity())) {
+                        ProgressView.loader(getActivity());
                         sendBouquet();
                     }
                 }
+                break;
+            case R.id.ivBack:
+                getActivity().onBackPressed();
 
         }
+    }
+
+    private void saveImage(ImageView ivInput) {
+        BitmapDrawable draw = (BitmapDrawable) ivInput.getDrawable();
+        Bitmap bitmap = draw.getBitmap();
+        FileOutputStream outStream = null;
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + "/" + getString(R.string.app_name));
+//        String filename = dir.getPath() + File.separator + System.currentTimeMillis() + ".jpg";
+
+
+        dir.mkdirs();
+        String fileName = String.format("%d.jpg", System.currentTimeMillis());
+
+        freeImageFile = new File(dir, fileName);
+        Log.d("zma fileName", freeImageFile.getAbsolutePath());
+        imgFile = freeImageFile;
+
+
+        try {
+            outStream = new FileOutputStream(freeImageFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+        try {
+            outStream.flush();
+            outStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void sendBouquet() {
@@ -115,9 +176,11 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
         sendBouquets.enqueue(new Callback<SendBouquetResponse>() {
             @Override
             public void onResponse(Call<SendBouquetResponse> call, Response<SendBouquetResponse> response) {
+                ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()) {
+                    getActivity().finish();
                     Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                    sendIntent.setData(Uri.parse("smsto:"+toPhone));
+                    sendIntent.setData(Uri.parse("smsto:" + toPhone));
                     sendIntent.putExtra("sms_body", response.body().getData().getImage());
                     startActivity(sendIntent);
                     AppRepository.mPutValue(getActivity()).putString("mBouquetLink", response.body().getData().getImage()).commit();
@@ -126,6 +189,7 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onFailure(Call<SendBouquetResponse> call, Throwable t) {
+                ProgressView.mDialog.dismiss();
 
             }
         });

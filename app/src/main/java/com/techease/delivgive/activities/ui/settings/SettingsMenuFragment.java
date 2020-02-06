@@ -16,22 +16,26 @@ import androidx.fragment.app.Fragment;
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.AccountSettingActivity;
 import com.techease.delivgive.activities.LoginSignupSelectionActivity;
+import com.techease.delivgive.activities.MakeAccountPremiumActivity;
 import com.techease.delivgive.utils.AppRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingsFragment extends Fragment implements View.OnClickListener {
+public class SettingsMenuFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.btnLogOut)
     Button btnLogout;
     @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.llAccountSettings)
     LinearLayout llAccountSettings;
+    @BindView(R.id.llSubscription)
+    LinearLayout llSubscription;
     private View view;
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
+
+    public static SettingsMenuFragment newInstance() {
+        return new SettingsMenuFragment();
     }
 
     @Nullable
@@ -47,6 +51,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         btnLogout.setOnClickListener(this);
         ivBack.setOnClickListener(this);
+        llSubscription.setOnClickListener(this);
         llAccountSettings.setOnClickListener(this);
     }
 
@@ -60,6 +65,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.llAccountSettings:
                 startActivity(new Intent(getActivity(), AccountSettingActivity.class));
+                break;
+            case R.id.llSubscription:
+                startActivity(new Intent(getActivity(), MakeAccountPremiumActivity.class));
                 break;
             case R.id.ivBack:
                 getActivity().onBackPressed();

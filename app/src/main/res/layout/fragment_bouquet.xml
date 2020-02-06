@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/widgetMargin"
-        android:text="Premium Flowers"
+        android:text="Bouquets"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="@dimen/app_name_size"
@@ -21,10 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/widgetMargin"
         android:padding="@dimen/clickableTextViewPadding"
-        android:src="@drawable/ic_search_black_24dp"
-        android:visibility="gone" />
+        android:src="@drawable/ic_search_black_24dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFlowers"

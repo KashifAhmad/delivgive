@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.MakeAccountPremiumActivity;
+import com.techease.delivgive.activities.SendBouquetActivity;
 import com.techease.delivgive.models.premiumFlowers.Datum;
+import com.techease.delivgive.utils.AppRepository;
 
 import java.util.List;
 
@@ -48,12 +50,14 @@ public class PremiumFlowersAdapter extends RecyclerView.Adapter<PremiumFlowersAd
         holder.tvName.setText(flower.getFlowerName());
         holder.tvFree.setText(flower.getTitle());
         Picasso.get().load(flower.getFlowerImage()).into(holder.ivFlowerImage);
-        holder.rlParent.setOnClickListener(v ->
-                context.startActivity(new Intent(context, MakeAccountPremiumActivity.class))
-        );
-
-
-
+        holder.rlParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppRepository.mPutValue(context).putBoolean("fromFree", true).commit();
+                AppRepository.mPutValue(context).putString("picLink", flower.getFlowerImage()).commit();
+                context.startActivity(new Intent(context, SendBouquetActivity.class));
+            }
+        });
     }
 
     @Override
