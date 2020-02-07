@@ -109,7 +109,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="50dp"
                 android:background="@drawable/round_button2"
-                android:text="Checkout"
+                android:text="Add Card"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />
         </FrameLayout>

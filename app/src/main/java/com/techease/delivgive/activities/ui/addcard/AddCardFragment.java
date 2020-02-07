@@ -2,23 +2,31 @@ package com.techease.delivgive.activities.ui.addcard;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.ui.CheckOutActivity;
+import com.techease.delivgive.models.addPaymentCardModels.AddCardResponse;
+import com.techease.delivgive.utils.AppRepository;
+import com.techease.delivgive.utils.Configuation;
+import com.techease.delivgive.utils.Connectivity;
+import com.techease.delivgive.utils.networking.BaseNetworking;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddCardFragment extends Fragment implements View.OnClickListener {
 
@@ -37,6 +45,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
     private String cardNumber, holderName, expiry, cvv;
     private boolean valid = false;
     private View view;
+
     public static AddCardFragment newInstance() {
         return new AddCardFragment();
     }
@@ -58,8 +67,15 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnCheckOut:
+                if (isValid()) {
+                    if (Connectivity.isConnected(getActivity())) {
+                        addCard();
+                    } else {
+                        Toast.makeText(getActivity(), Configuation.NETWORK_MSG, Toast.LENGTH_SHORT).show();
+                    }
+                }
                 startActivity(new Intent(getActivity(), CheckOutActivity.class));
                 break;
             case R.id.ivBack:
@@ -67,6 +83,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
     private boolean isValid() {
         valid = true;
         cardNumber = etCardNumber.getText().toString();
@@ -100,5 +117,23 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
             etExpiry.setError(null);
         }
         return valid;
+    }
+
+    private void addCard() {
+        Call<AddCardResponse> addCardResponseCall = BaseNetworking.apiServices().addCard(AppRepository.mUserID(getActivity()),
+                cardNumber, holderName, expiry, cvv);
+        addCardResponseCall.enqueue(new Callback<AddCardResponse>() {
+            @Override
+            public void onResponse(Call<AddCardResponse> call, Response<AddCardResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddCardResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

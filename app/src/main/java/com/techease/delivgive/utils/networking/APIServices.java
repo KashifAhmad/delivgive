@@ -1,5 +1,6 @@
 package com.techease.delivgive.utils.networking;
 
+import com.techease.delivgive.models.addPaymentCardModels.AddCardResponse;
 import com.techease.delivgive.models.changePasswordModels.ChangePasswordResponse;
 import com.techease.delivgive.models.freeFlowersModels.FreeFlowersResponse;
 import com.techease.delivgive.models.genericResponseModel.GenericResponse;
@@ -90,6 +91,13 @@ public interface APIServices {
 
     @GET("bucket/{id}")
     Call<GetUserBucketsResponse> userBuckets(@Path("id") int id);
+    @FormUrlEncoded
+    @POST("addCard")
+    Call<AddCardResponse> addCard(@Field("user_id") int id,
+                                  @Field("userCardNumber") String cardNumber,
+                                  @Field("userCardHolderName") String holderName,
+                                  @Field("userCardExpiry") String expiry,
+                                  @Field("userCardCsv") String CSV);
 
 }
 
