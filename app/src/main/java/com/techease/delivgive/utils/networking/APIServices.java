@@ -8,6 +8,7 @@ import com.techease.delivgive.models.getBouquetsModels.GetBouquetsResponse;
 import com.techease.delivgive.models.getUserBuckets.GetUserBucketsResponse;
 import com.techease.delivgive.models.getUserProfileModel.GetUserProfileResponse;
 import com.techease.delivgive.models.loginModels.LoginResponse;
+import com.techease.delivgive.models.plansListModels.GetPlansResponse;
 import com.techease.delivgive.models.premiumFlowers.PremiumResponse;
 import com.techease.delivgive.models.profileBodyUpdateModels.ProfileBodyUpdateResponse;
 import com.techease.delivgive.models.profilePicUpdateModels.ProfilePicUpdateResponse;
@@ -58,6 +59,7 @@ public interface APIServices {
 
     @GET("premium_flowers")
     Call<PremiumResponse> premiumFlowers();
+
     @GET("getBucket")
     Call<GetBouquetsResponse> bouquets();
 
@@ -91,6 +93,7 @@ public interface APIServices {
 
     @GET("bucket/{id}")
     Call<GetUserBucketsResponse> userBuckets(@Path("id") int id);
+
     @FormUrlEncoded
     @POST("addCard")
     Call<AddCardResponse> addCard(@Field("user_id") int id,
@@ -98,6 +101,9 @@ public interface APIServices {
                                   @Field("userCardHolderName") String holderName,
                                   @Field("userCardExpiry") String expiry,
                                   @Field("userCardCsv") String CSV);
+
+    @GET("subscriptionList")
+    Call<GetPlansResponse> getPlans();
 
 }
 
