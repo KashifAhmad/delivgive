@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -34,7 +33,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.techease.delivgive.FlowerListener;
+import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.SendBouquetActivity;
 import com.techease.delivgive.adapters.CustomImagesAdapter;

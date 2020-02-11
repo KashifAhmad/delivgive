@@ -1,11 +1,13 @@
 package com.techease.delivgive.utils.networking;
 
+import com.techease.delivgive.models.PlanSubscriptionModels.PlanSubscriptionResponse;
 import com.techease.delivgive.models.addPaymentCardModels.AddCardResponse;
 import com.techease.delivgive.models.changePasswordModels.ChangePasswordResponse;
 import com.techease.delivgive.models.freeFlowersModels.FreeFlowersResponse;
 import com.techease.delivgive.models.genericResponseModel.GenericResponse;
 import com.techease.delivgive.models.getBouquetsModels.GetBouquetsResponse;
 import com.techease.delivgive.models.getUserBuckets.GetUserBucketsResponse;
+import com.techease.delivgive.models.getUserPaymentCard.GetUserPaymentCardResponse;
 import com.techease.delivgive.models.getUserProfileModel.GetUserProfileResponse;
 import com.techease.delivgive.models.loginModels.LoginResponse;
 import com.techease.delivgive.models.plansListModels.GetPlansResponse;
@@ -104,6 +106,14 @@ public interface APIServices {
 
     @GET("subscriptionList")
     Call<GetPlansResponse> getPlans();
+
+    @GET("userCard/{id}")
+    Call<GetUserPaymentCardResponse> getCard(@Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("userSubscription")
+    Call<PlanSubscriptionResponse> plansSubscription(@Field("user_id") int id,
+                                                     @Field("plane_id") int planID);
 
 }
 

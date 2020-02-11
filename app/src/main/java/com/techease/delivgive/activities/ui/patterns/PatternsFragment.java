@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.techease.delivgive.FlowerListener;
+import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.R;
 import com.techease.delivgive.adapters.CustomImagesAdapter;
 import com.techease.delivgive.adapters.PremiumFlowersDialogAdapter;

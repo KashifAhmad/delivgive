@@ -111,12 +111,52 @@
                         android:text="Subscribe to get access to the premium account" />
                 </LinearLayout>
             </LinearLayout>
+            <View
+                android:id="@+id/view02"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/llSubscription"
+                android:background="@color/light_gray" />
+            <LinearLayout
+                android:id="@+id/llAddCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view02"
+                android:layout_marginTop="@dimen/widgetMargin"
+                android:orientation="horizontal"
+                android:padding="@dimen/screenPadding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/screenPadding"
+                    android:src="@mipmap/premium_flower" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Payment Card"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/clickableTextViewPadding"
+                        android:text="Add card to send the premium bouquets to your loved one" />
+                </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/llSubscription"
+                android:layout_below="@id/llAddCard"
                 android:background="@color/light_gray" />
 
 

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.ui.CheckOutActivity;
 import com.techease.delivgive.models.addPaymentCardModels.AddCardResponse;
+import com.techease.delivgive.models.getUserPaymentCard.GetUserPaymentCardResponse;
 import com.techease.delivgive.utils.AppRepository;
 import com.techease.delivgive.utils.Configuation;
 import com.techease.delivgive.utils.Connectivity;
@@ -63,6 +64,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         btnCheckout.setOnClickListener(this);
         ivBack.setOnClickListener(this);
+        getUserCard();
     }
 
     @Override
@@ -132,6 +134,27 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<AddCardResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getUserCard() {
+        Call<GetUserPaymentCardResponse> userPaymentCardResponseCall = BaseNetworking.apiServices().
+                getCard(AppRepository.mUserID(getActivity()));
+        userPaymentCardResponseCall.enqueue(new Callback<GetUserPaymentCardResponse>() {
+            @Override
+            public void onResponse(Call<GetUserPaymentCardResponse> call, Response<GetUserPaymentCardResponse> response) {
+                if (response.isSuccessful()) {
+                    etCardNumber.setText(response.body().getData().get(0).getUserCardNumber());
+                    etHolderName.setText(response.body().getData().get(0).getUserCardHolderName());
+                    etCVV.setText(response.body().getData().get(0).getUserCardCsv());
+                    etExpiry.setText(response.body().getData().get(0).getUserCardExpiry());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUserPaymentCardResponse> call, Throwable t) {
 
             }
         });

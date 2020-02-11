@@ -2,9 +2,11 @@ package com.techease.delivgive.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.techease.delivgive.R;
 import com.techease.delivgive.adapters.PlansAdapter;
+import com.techease.delivgive.models.PlanSubscriptionModels.PlanSubscriptionResponse;
 import com.techease.delivgive.models.plansListModels.Datum;
 import com.techease.delivgive.models.plansListModels.GetPlansResponse;
+import com.techease.delivgive.utils.AppRepository;
 import com.techease.delivgive.utils.ProgressView;
+import com.techease.delivgive.utils.interfaces.PlanSubscriptionID;
 import com.techease.delivgive.utils.networking.BaseNetworking;
 
 import java.util.ArrayList;
@@ -26,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MakeAccountPremiumActivity extends AppCompatActivity implements View.OnClickListener {
+public class MakeAccountPremiumActivity extends AppCompatActivity implements View.OnClickListener, PlanSubscriptionID {
 
 
     @BindView(R.id.btnPayNow)
@@ -37,6 +42,7 @@ public class MakeAccountPremiumActivity extends AppCompatActivity implements Vie
     RecyclerView rvPlans;
     List<Datum> plansList = new ArrayList<>();
     PlansAdapter adapter;
+    private int planID;
 
 
     @Override
@@ -52,7 +58,7 @@ public class MakeAccountPremiumActivity extends AppCompatActivity implements Vie
         btnPayNow.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         getPlans();
-        adapter = new PlansAdapter(this, plansList);
+        adapter = new PlansAdapter(this, plansList, this);
         rvPlans.setLayoutManager(new LinearLayoutManager(this));
         rvPlans.setAdapter(adapter);
         ProgressView.loader(this);
@@ -61,28 +67,8 @@ public class MakeAccountPremiumActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.rbSingle:
-//                if (rbMonthly.isChecked() || rbYearly.isChecked()) {
-//                    rbMonthly.setChecked(false);
-//                    rbYearly.setChecked(false);
-//                    AppRepository.mPutValue(this).putString("subsType", "single").commit();
-//                }
-//                break;
-//            case R.id.rbMonthly:
-//                if (rbSingle.isChecked() || rbYearly.isChecked()) {
-//                    rbSingle.setChecked(false);
-//                    rbYearly.setChecked(false);
-//                    AppRepository.mPutValue(this).putString("subsType", "monthly").commit();
-//                }
-//                break;
-//            case R.id.rbYearly:
-//                if (rbSingle.isChecked() || rbMonthly.isChecked()) {
-//                    rbMonthly.setChecked(false);
-//                    rbSingle.setChecked(false);
-//                    AppRepository.mPutValue(this).putString("subsType", "yearly").commit();
-//                }
-//                break;
             case R.id.btnPayNow:
+                buyPlan();
                 startActivity(new Intent(this, PaymentOptionActivity.class));
                 break;
             case R.id.ivBack:
@@ -110,5 +96,27 @@ public class MakeAccountPremiumActivity extends AppCompatActivity implements Vie
 
             }
         });
+    }
+    private void buyPlan(){
+        Call<PlanSubscriptionResponse> planSubscription = BaseNetworking.apiServices().plansSubscription(AppRepository.mUserID(this), planID);
+        planSubscription.enqueue(new Callback<PlanSubscriptionResponse>() {
+            @Override
+            public void onResponse(Call<PlanSubscriptionResponse> call, Response<PlanSubscriptionResponse> response) {
+                if (response.isSuccessful()){
+                    Toast.makeText(MakeAccountPremiumActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlanSubscriptionResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void planID(int id) {
+        planID = id;
+        Log.d("zma plan id", String.valueOf(id));
     }
 }

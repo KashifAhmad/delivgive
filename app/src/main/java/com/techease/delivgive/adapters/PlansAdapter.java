@@ -2,14 +2,8 @@ package com.techease.delivgive.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
 import com.techease.delivgive.R;
 import com.techease.delivgive.models.plansListModels.Datum;
+import com.techease.delivgive.utils.interfaces.PlanSubscriptionID;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -40,11 +31,15 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
 
     private Context context;
     private List<com.techease.delivgive.models.plansListModels.Datum> flowersList;
+    private PlanSubscriptionID planID;
+    private int lastSelectedPosition = -1;
+    RadioButton selected = null;
 
 
-    public PlansAdapter(Context context, List<com.techease.delivgive.models.plansListModels.Datum> flowersList) {
+    public PlansAdapter(Context context, List<com.techease.delivgive.models.plansListModels.Datum> flowersList, PlanSubscriptionID planID) {
         this.flowersList = flowersList;
         this.context = context;
+        this.planID = planID;
     }
 
     @Override
@@ -61,23 +56,33 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
         final Datum plan = flowersList.get(position);
         holder.rbPlan.setText(plan.getTitle());
         holder.tvPlanPrice.setText(plan.getPrice());
-        if (Integer.parseInt(plan.getId()) == 1){
+        Log.d("zma position", String.valueOf(position));
+        if (Integer.parseInt(plan.getId()) == 1) {
+            holder.rbPlan.setTextColor(Color.WHITE);
+            holder.tvPlanPrice.setTextColor(Color.WHITE);
+            holder.tvPerPrice.setTextColor(Color.WHITE);
+            holder.mLayout.setBackground(context.getResources().getDrawable(R.drawable.group));
+        } else if (Integer.parseInt(plan.getId()) == 2) {
+            holder.rbPlan.setTextColor(Color.WHITE);
+            holder.tvPlanPrice.setTextColor(Color.WHITE);
+            holder.tvPerPrice.setTextColor(Color.WHITE);
+            holder.mLayout.setBackground(context.getResources().getDrawable(R.drawable.group_copy));
+        } else {
             holder.rbPlan.setTextColor(context.getColor(R.color.colorPrimary));
             holder.tvPlanPrice.setTextColor(context.getColor(R.color.colorPrimary));
-            holder.tvPlanPrice.setTextColor(Color.WHITE);
-            holder.mLayout.setBackground(context.getResources().getDrawable(R.drawable.group));
-        }else if (Integer.parseInt(plan.getId()) == 2){
-            holder.rbPlan.setTextColor(Color.WHITE);
-            holder.tvPlanPrice.setTextColor(Color.WHITE);
-            holder.mLayout.setBackground(context.getResources().getDrawable(R.drawable.group_copy));
-        }else {
-            holder.rbPlan.setTextColor(Color.WHITE);
-            holder.tvPlanPrice.setTextColor(Color.WHITE);
+            holder.tvPerPrice.setTextColor(context.getColor(R.color.colorPrimary));
             holder.mLayout.setBackground(context.getResources().getDrawable(R.drawable.group_copy_2));
         }
+        holder.rbPlan.setOnClickListener(v -> {
+            if (selected != null) {
+                selected.setChecked(false);
+            }
+                selected = null;
+                holder.rbPlan.setChecked(true);
+                selected = holder.rbPlan;
+        });
 
     }
-
 
 
     @Override
@@ -88,7 +93,8 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         RadioButton rbPlan;
-        TextView tvPlanPrice;
+        RadioGroup radioGroup;
+        TextView tvPlanPrice, tvPerPrice;
         ImageView ivPanImage;
         LinearLayout mLayout;
 
@@ -97,6 +103,8 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
             tvPlanPrice = view.findViewById(R.id.tvPlanPrice);
             rbPlan = view.findViewById(R.id.rbPlan);
             mLayout = view.findViewById(R.id.llPlans);
+            tvPerPrice = itemView.findViewById(R.id.tvPerPrice);
+            radioGroup = view.findViewById(R.id.radioGroup);
 
 
         }

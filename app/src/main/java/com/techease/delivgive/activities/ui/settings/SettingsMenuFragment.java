@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.AccountSettingActivity;
+import com.techease.delivgive.activities.AddCardActivity;
 import com.techease.delivgive.activities.LoginSignupSelectionActivity;
 import com.techease.delivgive.activities.MakeAccountPremiumActivity;
 import com.techease.delivgive.utils.AppRepository;
@@ -31,6 +32,8 @@ public class SettingsMenuFragment extends Fragment implements View.OnClickListen
     LinearLayout llAccountSettings;
     @BindView(R.id.llSubscription)
     LinearLayout llSubscription;
+    @BindView(R.id.llAddCard)
+    LinearLayout llAddCard;
     private View view;
 
 
@@ -53,6 +56,7 @@ public class SettingsMenuFragment extends Fragment implements View.OnClickListen
         ivBack.setOnClickListener(this);
         llSubscription.setOnClickListener(this);
         llAccountSettings.setOnClickListener(this);
+        llAddCard.setOnClickListener(this);
     }
 
     @Override
@@ -68,6 +72,9 @@ public class SettingsMenuFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.llSubscription:
                 startActivity(new Intent(getActivity(), MakeAccountPremiumActivity.class));
+                break;
+            case R.id.llAddCard:
+                startActivity(new Intent(getActivity(), AddCardActivity.class));
                 break;
             case R.id.ivBack:
                 getActivity().onBackPressed();

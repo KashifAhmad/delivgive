@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.techease.delivgive.FlowerListener;
+import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.R;
 import com.techease.delivgive.models.Images;
 
