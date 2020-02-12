@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.SendBouquetActivity;
@@ -44,6 +45,7 @@ import com.techease.delivgive.models.premiumFlowers.PremiumResponse;
 import com.techease.delivgive.utils.AppRepository;
 import com.techease.delivgive.utils.ProgressView;
 import com.techease.delivgive.utils.TouchImageView;
+import com.techease.delivgive.utils.interfaces.PremiumFlowersLinkListener;
 import com.techease.delivgive.utils.networking.BaseNetworking;
 
 import java.io.File;
@@ -67,6 +69,7 @@ public class CreateFragment extends Fragment implements
         View.OnClickListener,
         View.OnTouchListener,
         FlowerListener,
+        PremiumFlowersLinkListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
     private View view;
     @BindView(R.id.llColors)
@@ -102,7 +105,7 @@ public class CreateFragment extends Fragment implements
     float dX;
     float dY;
     int lastAction;
-    private String bouquetText, textSize;
+    private String bouquetText, textSize, flowerLinkFromAdapter;
     private int imageID;
     private TextView textView;//dynamic textTextView textView
     private boolean isCentre = false, isJustify = false,
@@ -134,7 +137,7 @@ public class CreateFragment extends Fragment implements
         llForward.setOnClickListener(this);
         llSendToTop.setOnClickListener(this);
         btnDone.setOnClickListener(this);
-        premiumFlowersAdapter = new PremiumFlowersDialogAdapter(getActivity(), premiumList);
+        premiumFlowersAdapter = new PremiumFlowersDialogAdapter(getActivity(), premiumList, this);
         initData();
         initPremium();
         checkPermission();
@@ -265,7 +268,6 @@ public class CreateFragment extends Fragment implements
 
                 break;
             case R.id.llTemplates:
-                ProgressView.loader(getActivity());
                 premiumFlowersDialog(getActivity());
                 break;
             case R.id.llPatterns:
@@ -394,203 +396,7 @@ public class CreateFragment extends Fragment implements
         });
         textView.setOnTouchListener(this);
 
-//        ImageButton actionUndo = dialogView.findViewById(R.id.action_undo);
-//        actionUndo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.undo();
-//            }
-//        });
 
-//        ImageButton actionRedo = dialogView.findViewById(R.id.action_redo);
-//        actionRedo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.redo();
-//            }
-//        });
-
-//        ImageButton actionBold = dialogView.findViewById(R.id.action_bold);
-//        actionBold.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setBold();
-//            }
-//        });
-
-//        findViewById(R.id.action_italic).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setItalic();
-//            }
-//        });
-//
-//        findViewById(R.id.action_subscript).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setSubscript();
-//            }
-//        });
-//
-//        findViewById(R.id.action_superscript).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setSuperscript();
-//            }
-//        });
-//
-//        findViewById(R.id.action_strikethrough).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setStrikeThrough();
-//            }
-//        });
-//
-//        findViewById(R.id.action_underline).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setUnderline();
-//            }
-//        });
-//
-//        findViewById(R.id.action_heading1).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setHeading(1);
-//            }
-//        });
-//
-//        findViewById(R.id.action_heading2).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setHeading(2);
-//            }
-//        });
-//
-//        findViewById(R.id.action_heading3).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setHeading(3);
-//            }
-//        });
-//
-//        findViewById(R.id.action_heading4).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setHeading(4);
-//            }
-//        });
-//
-//        findViewById(R.id.action_heading5).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setHeading(5);
-//            }
-//        });
-//
-//        findViewById(R.id.action_heading6).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setHeading(6);
-//            }
-//        });
-//
-//        findViewById(R.id.action_txt_color).setOnClickListener(new View.OnClickListener() {
-//            private boolean isChanged;
-//
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setTextColor(isChanged ? Color.BLACK : Color.RED);
-//                isChanged = !isChanged;
-//            }
-//        });
-//
-//        findViewById(R.id.action_bg_color).setOnClickListener(new View.OnClickListener() {
-//            private boolean isChanged;
-//
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setTextBackgroundColor(isChanged ? Color.TRANSPARENT : Color.YELLOW);
-//                isChanged = !isChanged;
-//            }
-//        });
-//
-//        findViewById(R.id.action_indent).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setIndent();
-//            }
-//        });
-//
-//        findViewById(R.id.action_outdent).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setOutdent();
-//            }
-//        });
-//
-//        findViewById(R.id.action_align_left).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setAlignLeft();
-//            }
-//        });
-//
-//        findViewById(R.id.action_align_center).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setAlignCenter();
-//            }
-//        });
-//
-//        findViewById(R.id.action_align_right).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setAlignRight();
-//            }
-//        });
-//
-//        findViewById(R.id.action_blockquote).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setBlockquote();
-//            }
-//        });
-//
-//        findViewById(R.id.action_insert_bullets).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setBullets();
-//            }
-//        });
-//
-//        findViewById(R.id.action_insert_numbers).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.setNumbers();
-//            }
-//        });
-//
-//        findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG",
-//                        "dachshund");
-//            }
-//        });
-//
-//        findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.insertLink("https://github.com/wasabeef", "wasabeef");
-//            }
-//        });
-//        findViewById(R.id.action_insert_checkbox).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mEditor.insertTodo();
-//            }
-//        });
 
 
         dialog = dialogBuilder.create();
@@ -655,7 +461,6 @@ public class CreateFragment extends Fragment implements
         flowersResponseCall.enqueue(new Callback<PremiumResponse>() {
             @Override
             public void onResponse(Call<PremiumResponse> call, Response<PremiumResponse> response) {
-//                ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()) {
                     premiumList.addAll(response.body().getData());
                     premiumFlowersAdapter.notifyDataSetChanged();
@@ -664,7 +469,6 @@ public class CreateFragment extends Fragment implements
 
             @Override
             public void onFailure(Call<PremiumResponse> call, Throwable t) {
-                ProgressView.mDialog.dismiss();
             }
         });
     }
@@ -732,5 +536,19 @@ public class CreateFragment extends Fragment implements
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void bouquetLink(String link) {
+        flowerLinkFromAdapter = link;
+        dialog.dismiss();
+        TouchImageView imageView = new TouchImageView(getActivity());
+//            ImageView imageView = new ImageView(getActivity());
+        LinearLayout.LayoutParams params = new LinearLayout
+                .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Picasso.get().load(link).into(imageView);
+        imageView.setLayoutParams(params);
+        flBouquetSpace.addView(imageView);
+        imageView.setOnTouchListener(this);
     }
 }

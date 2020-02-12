@@ -18,6 +18,7 @@ import com.techease.delivgive.activities.AccountSettingActivity;
 import com.techease.delivgive.activities.AddCardActivity;
 import com.techease.delivgive.activities.LoginSignupSelectionActivity;
 import com.techease.delivgive.activities.MakeAccountPremiumActivity;
+import com.techease.delivgive.activities.PaymentOptionActivity;
 import com.techease.delivgive.utils.AppRepository;
 
 import butterknife.BindView;
@@ -74,7 +75,7 @@ public class SettingsMenuFragment extends Fragment implements View.OnClickListen
                 startActivity(new Intent(getActivity(), MakeAccountPremiumActivity.class));
                 break;
             case R.id.llAddCard:
-                startActivity(new Intent(getActivity(), AddCardActivity.class));
+                startActivity(new Intent(getActivity(), PaymentOptionActivity.class));
                 break;
             case R.id.ivBack:
                 getActivity().onBackPressed();

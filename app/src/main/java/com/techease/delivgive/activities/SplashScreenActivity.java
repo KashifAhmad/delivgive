@@ -19,12 +19,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreenActivity.this, MakeAccountPremiumActivity.class));
-//                if (AppRepository.isLoggedIn(SplashScreenActivity.this)) {
-//                    startActivity(new Intent(SplashScreenActivity.this, MainBottomNavActivity.class));
-//                } else {
-//                    startActivity(new Intent(SplashScreenActivity.this, FirstIntroScreenActivity.class));
-//                }
+//                startActivity(new Intent(SplashScreenActivity.this, MakeAccountPremiumActivity.class));
+                if (AppRepository.isLoggedIn(SplashScreenActivity.this)) {
+                    startActivity(new Intent(SplashScreenActivity.this, MainBottomNavActivity.class));
+                } else {
+                    startActivity(new Intent(SplashScreenActivity.this, FirstIntroScreenActivity.class));
+                }
                 finish();
             }
         }, 1000);

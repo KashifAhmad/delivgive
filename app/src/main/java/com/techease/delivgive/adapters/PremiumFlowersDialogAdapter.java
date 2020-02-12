@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.techease.delivgive.R;
 import com.techease.delivgive.models.premiumFlowers.Datum;
+import com.techease.delivgive.utils.interfaces.PremiumFlowersLinkListener;
 
 import java.util.List;
 
@@ -24,10 +25,12 @@ public class PremiumFlowersDialogAdapter extends RecyclerView.Adapter<PremiumFlo
 
     private Context context;
     private List<Datum> flowersList;
+    private PremiumFlowersLinkListener flowersLinkListener;
 
-    public PremiumFlowersDialogAdapter(Context context, List<Datum> flowersList) {
+    public PremiumFlowersDialogAdapter(Context context, List<Datum> flowersList, PremiumFlowersLinkListener linkListener) {
         this.flowersList = flowersList;
         this.context = context;
+        this.flowersLinkListener = linkListener;
     }
 
     @Override
@@ -42,6 +45,12 @@ public class PremiumFlowersDialogAdapter extends RecyclerView.Adapter<PremiumFlo
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Datum flower = flowersList.get(position);
         Picasso.get().load(flower.getFlowerImage()).into(holder.ivFlowerImage);
+        holder.ivFlowerImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flowersLinkListener.bouquetLink(flower.getFlowerImage());
+            }
+        });
     }
 
     @Override

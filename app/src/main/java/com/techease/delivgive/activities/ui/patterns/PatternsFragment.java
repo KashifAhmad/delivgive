@@ -29,6 +29,7 @@ import com.techease.delivgive.models.Images;
 import com.techease.delivgive.models.premiumFlowers.Datum;
 import com.techease.delivgive.models.premiumFlowers.PremiumResponse;
 import com.techease.delivgive.utils.ProgressView;
+import com.techease.delivgive.utils.interfaces.PremiumFlowersLinkListener;
 import com.techease.delivgive.utils.networking.BaseNetworking;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PatternsFragment extends Fragment implements View.OnClickListener, FlowerListener {
+public class PatternsFragment extends Fragment implements View.OnClickListener, FlowerListener, PremiumFlowersLinkListener {
 
     private PatternsViewModel mViewModel;
     private View view;
@@ -85,7 +86,7 @@ public class PatternsFragment extends Fragment implements View.OnClickListener, 
         llPatterns.setOnClickListener(this);
         llTexts.setOnClickListener(this);
         llTemplates.setOnClickListener(this);
-        premiumFlowersAdapter = new PremiumFlowersDialogAdapter(getActivity(), premiumList);
+        premiumFlowersAdapter = new PremiumFlowersDialogAdapter(getActivity(), premiumList, this);
         initData();
         initPremium();
     }
@@ -438,6 +439,11 @@ public class PatternsFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void flowerID(int id) {
+
+    }
+
+    @Override
+    public void bouquetLink(String link) {
 
     }
 }

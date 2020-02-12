@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +34,6 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
     private List<com.techease.delivgive.models.plansListModels.Datum> flowersList;
     private PlanSubscriptionID planID;
     private int lastSelectedPosition = -1;
-    RadioButton selected = null;
 
 
     public PlansAdapter(Context context, List<com.techease.delivgive.models.plansListModels.Datum> flowersList, PlanSubscriptionID planID) {
@@ -73,13 +73,14 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
             holder.tvPerPrice.setTextColor(context.getColor(R.color.colorPrimary));
             holder.mLayout.setBackground(context.getResources().getDrawable(R.drawable.group_copy_2));
         }
-        holder.rbPlan.setOnClickListener(v -> {
-            if (selected != null) {
-                selected.setChecked(false);
+        holder.rbPlan.setChecked(lastSelectedPosition == position);
+        holder.rbPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lastSelectedPosition = holder.getAdapterPosition();
+                notifyDataSetChanged();
+                planID.planID(Integer.parseInt(plan.getId()));
             }
-                selected = null;
-                holder.rbPlan.setChecked(true);
-                selected = holder.rbPlan;
         });
 
     }
@@ -93,7 +94,6 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         RadioButton rbPlan;
-        RadioGroup radioGroup;
         TextView tvPlanPrice, tvPerPrice;
         ImageView ivPanImage;
         LinearLayout mLayout;
@@ -104,7 +104,14 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.MyViewHolder
             rbPlan = view.findViewById(R.id.rbPlan);
             mLayout = view.findViewById(R.id.llPlans);
             tvPerPrice = itemView.findViewById(R.id.tvPerPrice);
-            radioGroup = view.findViewById(R.id.radioGroup);
+//            rbPlan.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    lastSelectedPosition = getAdapterPosition();
+//                    notifyDataSetChanged();
+//
+//                }
+//            });
 
 
         }
