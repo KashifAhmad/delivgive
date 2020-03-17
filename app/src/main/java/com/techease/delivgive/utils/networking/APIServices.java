@@ -3,6 +3,7 @@ package com.techease.delivgive.utils.networking;
 import com.techease.delivgive.models.PlanSubscriptionModels.PlanSubscriptionResponse;
 import com.techease.delivgive.models.addPaymentCardModels.AddCardResponse;
 import com.techease.delivgive.models.changePasswordModels.ChangePasswordResponse;
+import com.techease.delivgive.models.flowerImagesModel.FlowersImagesResponse;
 import com.techease.delivgive.models.freeFlowersModels.FreeFlowersResponse;
 import com.techease.delivgive.models.genericResponseModel.GenericResponse;
 import com.techease.delivgive.models.getBouquetsModels.GetBouquetsResponse;
@@ -114,6 +115,9 @@ public interface APIServices {
     @POST("userSubscription")
     Call<PlanSubscriptionResponse> plansSubscription(@Field("user_id") int id,
                                                      @Field("plane_id") int planID);
+
+    @GET("flowers")
+    Call<FlowersImagesResponse> flowers();
 
 }
 

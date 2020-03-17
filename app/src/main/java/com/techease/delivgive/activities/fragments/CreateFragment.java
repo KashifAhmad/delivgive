@@ -76,12 +76,12 @@ public class CreateFragment extends Fragment implements
     LinearLayout llColors;
     @BindView(R.id.llFlowers)
     LinearLayout llFlowers;
-    @BindView(R.id.llPatterns)
-    LinearLayout llPatterns;
+//    @BindView(R.id.llPatterns)
+//    LinearLayout llPatterns;
     @BindView(R.id.llTexts)
     LinearLayout llTexts;
-    @BindView(R.id.llTemplates)
-    LinearLayout llTemplates;
+//    @BindView(R.id.llTemplates)
+//    LinearLayout llTemplates;
     @BindView(R.id.flBouquetSpace)
     FrameLayout flBouquetSpace;
     @BindView(R.id.llSendToTop)
@@ -129,9 +129,9 @@ public class CreateFragment extends Fragment implements
         ButterKnife.bind(this, view);
         llColors.setOnClickListener(this);
         llFlowers.setOnClickListener(this);
-        llPatterns.setOnClickListener(this);
+//        llPatterns.setOnClickListener(this);
         llTexts.setOnClickListener(this);
-        llTemplates.setOnClickListener(this);
+//        llTemplates.setOnClickListener(this);
         llBack.setOnClickListener(this);
         llBackToTop.setOnClickListener(this);
         llForward.setOnClickListener(this);

@@ -22,7 +22,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-
                 android:layout_marginTop="@dimen/screenPadding"
                 android:layout_marginEnd="-1dp"
                 android:padding="5dp"
@@ -52,8 +51,8 @@
                 android:id="@+id/hsvItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvDragDrop"
                 android:layout_centerHorizontal="true"
+                android:layout_below="@id/tvDragDrop"
                 android:scrollbars="none">
 
                 <TableLayout
@@ -63,6 +62,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_marginTop="@dimen/widgetMargin"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
@@ -71,7 +71,8 @@
                             android:id="@+id/llColors"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <ImageView
@@ -92,7 +93,8 @@
                             android:id="@+id/llFlowers"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <ImageView
@@ -108,31 +110,33 @@
                                 android:text="Flowers" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/llPatterns"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                        <!--                        <LinearLayout-->
+                        <!--                            android:id="@+id/llPatterns"-->
+                        <!--                            android:layout_width="0dp"-->
+                        <!--                            android:visibility="gone"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_weight="1"-->
+                        <!--                            android:orientation="vertical">-->
 
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_margin="5dp"
-                                android:src="@mipmap/paterns" />
+                        <!--                            <ImageView-->
+                        <!--                                android:layout_width="60dp"-->
+                        <!--                                android:layout_height="60dp"-->
+                        <!--                                android:layout_margin="5dp"-->
+                        <!--                                android:src="@mipmap/paterns" />-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="Patterns" />
-                        </LinearLayout>
+                        <!--                            <TextView-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:layout_gravity="center_horizontal"-->
+                        <!--                                android:text="Patterns" />-->
+                        <!--                        </LinearLayout>-->
 
                         <LinearLayout
                             android:id="@+id/llTexts"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <ImageView
@@ -148,25 +152,26 @@
                                 android:text="Texts" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/llTemplates"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                        <!--                        <LinearLayout-->
+                        <!--                            android:id="@+id/llTemplates"-->
+                        <!--                            android:layout_width="0dp"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_weight="1"-->
+                        <!--                            android:orientation="vertical"-->
+                        <!--                            android:visibility="gone">-->
 
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_margin="5dp"
-                                android:src="@mipmap/templates" />
+                        <!--                            <ImageView-->
+                        <!--                                android:layout_width="60dp"-->
+                        <!--                                android:layout_height="60dp"-->
+                        <!--                                android:layout_margin="5dp"-->
+                        <!--                                android:src="@mipmap/templates" />-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="Templates" />
-                        </LinearLayout>
+                        <!--                            <TextView-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:layout_gravity="center_horizontal"-->
+                        <!--                                android:text="Templates" />-->
+                        <!--                        </LinearLayout>-->
                     </LinearLayout>
                 </TableLayout>
             </HorizontalScrollView>
@@ -175,11 +180,10 @@
                 android:id="@+id/flBouquetSpace"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:layout_below="@id/hsvItems"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="@dimen/screenPadding"
-                android:background="@color/colorPrimary"
-                android:layout_below="@id/hsvItems"/>
-
+                android:background="@color/colorPrimary" />
 
 
             <LinearLayout
@@ -187,33 +191,34 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/flBouquetSpace"
                 android:layout_margin="@dimen/widgetMargin"
+                android:orientation="horizontal"
                 android:padding="5dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/llBackToTop"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="3dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="3dp">
 
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@color/colorLightPink"
                         android:padding="10dp"
-                        android:layout_gravity="center_horizontal"
                         android:src="@mipmap/send_to_back" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10sp"
                         android:layout_gravity="center_horizontal"
-                        android:text="Send to Back" />
+                        android:text="Send to Back"
+                        android:textSize="10sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/llBack"
                     android:layout_width="0dp"
@@ -224,18 +229,19 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@color/colorLightPink"
                         android:padding="10dp"
-                        android:layout_gravity="center_horizontal"
                         android:src="@mipmap/back" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10sp"
                         android:layout_gravity="center_horizontal"
-                        android:text="Back" />
+                        android:text="Back"
+                        android:textSize="10sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/llForward"
                     android:layout_width="0dp"
@@ -246,18 +252,19 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@color/colorLightPink"
                         android:padding="10dp"
-                        android:layout_gravity="center_horizontal"
                         android:src="@mipmap/forward" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:textSize="10sp"
-                        android:text="Forward" />
+                        android:text="Forward"
+                        android:textSize="10sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/llSendToTop"
                     android:layout_width="0dp"
@@ -268,30 +275,31 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
                         android:background="@color/colorLightPink"
                         android:padding="10dp"
-                        android:layout_gravity="center_horizontal"
                         android:src="@mipmap/sent_to_top" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10sp"
                         android:layout_gravity="center_horizontal"
-                        android:text="Send to top" />
+                        android:text="Send to top"
+                        android:textSize="10sp" />
                 </LinearLayout>
             </LinearLayout>
 
         </RelativeLayout>
+
         <Button
             android:id="@+id/btnDone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="60dp"
+            android:layout_marginStart="@dimen/screenPadding"
+            android:layout_marginEnd="@dimen/screenPadding"
             android:background="@color/colorPrimary"
             android:text="Done"
-            android:layout_margin="60dp"
-            android:layout_marginEnd="@dimen/screenPadding"
-            android:layout_marginStart="@dimen/screenPadding"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
 

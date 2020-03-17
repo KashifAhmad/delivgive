@@ -146,10 +146,14 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<GetUserPaymentCardResponse> call, Response<GetUserPaymentCardResponse> response) {
                 if (response.isSuccessful()) {
-                    etCardNumber.setText(response.body().getData().get(0).getUserCardNumber());
-                    etHolderName.setText(response.body().getData().get(0).getUserCardHolderName());
-                    etCVV.setText(response.body().getData().get(0).getUserCardCsv());
-                    etExpiry.setText(response.body().getData().get(0).getUserCardExpiry());
+                    if(response.body().getData().size()>0) {
+                        etCardNumber.setText(response.body().getData().get(0).getUserCardNumber());
+                        etHolderName.setText(response.body().getData().get(0).getUserCardHolderName());
+                        etCVV.setText(response.body().getData().get(0).getUserCardCsv());
+                        etExpiry.setText(response.body().getData().get(0).getUserCardExpiry());
+                    }else {
+                        Toast.makeText(getActivity(), "No Card Added", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
