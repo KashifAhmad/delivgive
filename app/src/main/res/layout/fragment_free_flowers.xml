@@ -10,11 +10,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/widgetMargin"
-        android:text="Free Flowers"
+        android:text="@string/complimentary_flowers_bouquets_gifts"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="@dimen/app_name_size"
         android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tvFreeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLetsCreate"
+        android:text="Please select and deliver the flowers, bouquets, and gifts from this inventory free of charge ! "
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textStyle="italic"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -30,7 +40,7 @@
         android:id="@+id/rvFlowers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvLetsCreate"
+        android:layout_below="@id/tvFreeText"
         android:layout_marginTop="@dimen/widgetMargin"
         tools:ignore="MissingConstraints" />
 </RelativeLayout>

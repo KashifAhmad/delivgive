@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+import com.techease.delivgive.models.flowerImagesModel.Datum;
 import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.R;
 import com.techease.delivgive.models.Images;
@@ -25,10 +27,10 @@ public class CustomImagesAdapter extends RecyclerView.Adapter<CustomImagesAdapte
 
     FlowerListener flowerListener;
     private Context context;
-    private List<Images> flowersList;
+    private List<Datum> flowersList;
     private int lastPosition = -1;
 
-    public CustomImagesAdapter(Context context, List<Images> flowersList, FlowerListener mListener) {
+    public CustomImagesAdapter(Context context, List<Datum> flowersList, FlowerListener mListener) {
         this.flowersList = flowersList;
         this.context = context;
         this.flowerListener = mListener;
@@ -44,15 +46,15 @@ public class CustomImagesAdapter extends RecyclerView.Adapter<CustomImagesAdapte
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final Images flower = flowersList.get(position);
-        holder.ivFlowerImage.setImageResource(flower.imageId);
+        final Datum flower = flowersList.get(position);
+        Picasso.get().load(flower.getFlower()).into(holder.ivFlowerImage);
         holder.ivSelected.setVisibility(View.GONE);
         holder.ivFlowerImage.setBackgroundColor(flower.isSelected() ? context.getResources().getColor(R.color.colorPrimary) : context.getResources().getColor(R.color.light_gray));
         holder.ivFlowerImage.setOnClickListener(v -> {
             lastPosition = position;
             notifyDataSetChanged();
-            Log.d("zma image id", String.valueOf(flower.imageId));
-            flowerListener.flowerID(flower.imageId);
+            Log.d("zma image id", String.valueOf(flower.getId()));
+            flowerListener.flowerID(flower.getFlower());
 
         });
         if (position == lastPosition) {

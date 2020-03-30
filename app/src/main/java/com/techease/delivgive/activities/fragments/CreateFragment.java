@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.techease.delivgive.models.flowerImagesModel.FlowersImagesResponse;
 import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.SendBouquetActivity;
@@ -97,7 +98,7 @@ public class CreateFragment extends Fragment implements
     RecyclerView rvFlowers;
     CustomImagesAdapter adapter;
     PremiumFlowersDialogAdapter premiumFlowersAdapter;
-    List<Images> imagesList = new ArrayList<>();
+    List<com.techease.delivgive.models.flowerImagesModel.Datum> imagesList = new ArrayList<>();
     List<Datum> premiumList = new ArrayList<>();
     public AlertDialog dialog;
     private RichEditor mEditor;
@@ -106,7 +107,7 @@ public class CreateFragment extends Fragment implements
     float dY;
     int lastAction;
     private String bouquetText, textSize, flowerLinkFromAdapter;
-    private int imageID;
+    private String imageID;
     private TextView textView;//dynamic textTextView textView
     private boolean isCentre = false, isJustify = false,
             isLeft = false, isRight = false, isMotionEventCalled = false;
@@ -190,21 +191,21 @@ public class CreateFragment extends Fragment implements
     }
 
     public void initData() {
-        imagesList.add(new Images(R.drawable.white_bucket_flowers, ""));
-        imagesList.add(new Images(R.drawable.red_ghotai_flowers, ""));
-        imagesList.add(new Images(R.drawable.red_bucket_flowers, ""));
-        imagesList.add(new Images(R.drawable.bucket_2_flowers, ""));
-        imagesList.add(new Images(R.drawable.bucket_flowers, ""));
-        imagesList.add(new Images(R.drawable.white_bucket, ""));
-        imagesList.add(new Images(R.drawable.red_gift, ""));
-        imagesList.add(new Images(R.drawable.pick_and_yellow, ""));
-        imagesList.add(new Images(R.drawable.red_and_white, ""));
-        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-        imagesList.add(new Images(R.drawable.bouquet_52, ""));
-        imagesList.add(new Images(R.drawable.pink_flowers, ""));
-        imagesList.add(new Images(R.drawable.group_6, ""));
-        imagesList.add(new Images(R.drawable.group_7, ""));
-        imagesList.add(new Images(R.drawable.group, ""));
+//        imagesList.add(new Images(R.drawable.white_bucket_flowers, ""));
+//        imagesList.add(new Images(R.drawable.red_ghotai_flowers, ""));
+//        imagesList.add(new Images(R.drawable.red_bucket_flowers, ""));
+//        imagesList.add(new Images(R.drawable.bucket_2_flowers, ""));
+//        imagesList.add(new Images(R.drawable.bucket_flowers, ""));
+//        imagesList.add(new Images(R.drawable.white_bucket, ""));
+//        imagesList.add(new Images(R.drawable.red_gift, ""));
+//        imagesList.add(new Images(R.drawable.pick_and_yellow, ""));
+//        imagesList.add(new Images(R.drawable.red_and_white, ""));
+//        imagesList.add(new Images(R.drawable.bouquet_32, ""));
+//        imagesList.add(new Images(R.drawable.bouquet_52, ""));
+//        imagesList.add(new Images(R.drawable.pink_flowers, ""));
+//        imagesList.add(new Images(R.drawable.group_6, ""));
+//        imagesList.add(new Images(R.drawable.group_7, ""));
+//        imagesList.add(new Images(R.drawable.group, ""));
     }
 
     @Override
@@ -408,6 +409,7 @@ public class CreateFragment extends Fragment implements
 
 
     public AlertDialog flowersDialog(Context context) {
+        imagesList.clear();
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.flowers_dialog, null);
@@ -419,6 +421,7 @@ public class CreateFragment extends Fragment implements
         adapter = new CustomImagesAdapter(getActivity(), imagesList, this);
         rvFlowers.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        freeFlowersForCreateBouquet();
         btnYes.setOnClickListener(v -> {
             dialog.dismiss();
 //            PhotoView imageView = new PhotoView(getActivity());
@@ -426,7 +429,8 @@ public class CreateFragment extends Fragment implements
 //            ImageView imageView = new ImageView(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout
                     .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            imageView.setImageResource(imageID);
+            Picasso.get().load(imageID).into(imageView);
+//            imageView.setImageResource(imageID);
             imageView.setLayoutParams(params);
             flBouquetSpace.addView(imageView);
             imageView.setOnTouchListener(this);
@@ -438,6 +442,23 @@ public class CreateFragment extends Fragment implements
         dialog.show();
 
         return dialog;
+    }
+    private void freeFlowersForCreateBouquet(){
+        Call<FlowersImagesResponse> imagesResponseCall = BaseNetworking.apiServices().flowers();
+        imagesResponseCall.enqueue(new Callback<FlowersImagesResponse>() {
+            @Override
+            public void onResponse(Call<FlowersImagesResponse> call, Response<FlowersImagesResponse> response) {
+                if (response.isSuccessful()){
+                    imagesList.addAll(response.body().getData());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FlowersImagesResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     public AlertDialog premiumFlowersDialog(Context context) {
@@ -474,7 +495,7 @@ public class CreateFragment extends Fragment implements
     }
 
     @Override
-    public void flowerID(int id) {
+    public void flowerID(String id) {
         imageID = id;
     }
 

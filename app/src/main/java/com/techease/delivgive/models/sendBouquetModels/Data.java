@@ -24,6 +24,17 @@ public class Data {
     @SerializedName("user_id")
     private String mUserId;
 
+    public String getPageUrl() {
+        return pageUrl;
+    }
+
+    public void setPageUrl(String pageUrl) {
+        this.pageUrl = pageUrl;
+    }
+
+    @SerializedName("page_url")
+    private String pageUrl;
+
     public String getCreatedAt() {
         return mCreatedAt;
     }

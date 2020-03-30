@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/screenPadding"
-                android:text="Create Custom"
+                android:text="@string/customize_your_delivery"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="@dimen/app_name_size"

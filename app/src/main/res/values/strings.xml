@@ -43,5 +43,7 @@
     <string name="create">Create</string>
     <string name="bouquets">Bouquets</string>
     <string name="drag_and_drop">Drage and drop the combination you like and send custom made premium bouquets.</string>
+    <string name="customize_your_delivery">Create a Custom Pairing for Delivery</string>
+    <string name="complimentary_flowers_bouquets_gifts">Complimentary Flowers/Bouquets/Gifts</string>
 
 </resources>

@@ -117,7 +117,7 @@ public class PatternsFragment extends Fragment implements View.OnClickListener, 
         Button btnYes = dialogView.findViewById(R.id.btnDone);
         rvFlowers = dialogView.findViewById(R.id.rvFlowers);
         rvFlowers.setLayoutManager(new GridLayoutManager(getActivity(), 5));
-        adapter = new CustomImagesAdapter(getActivity(), imagesList, this);
+//        adapter = new CustomImagesAdapter(getActivity(), imagesList, this);
         rvFlowers.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         btnYes.setOnClickListener(v -> {
@@ -438,7 +438,7 @@ public class PatternsFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void flowerID(int id) {
+    public void flowerID(String id) {
 
     }
 

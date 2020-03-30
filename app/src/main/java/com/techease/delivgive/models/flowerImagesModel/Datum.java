@@ -15,7 +15,15 @@ public class Datum {
     private String mId;
     @SerializedName("updated_at")
     private String mUpdatedAt;
+    public boolean isSelected() {
+        return isSelected;
+    }
 
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isSelected;
     public String getCreatedAt() {
         return mCreatedAt;
     }

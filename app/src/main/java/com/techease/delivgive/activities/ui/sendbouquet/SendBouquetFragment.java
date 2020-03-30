@@ -181,9 +181,9 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
                     getActivity().finish();
                     Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                     sendIntent.setData(Uri.parse("smsto:" + toPhone));
-                    sendIntent.putExtra("sms_body", response.body().getData().getImage());
+                    sendIntent.putExtra("sms_body", response.body().getData().getPageUrl());
                     startActivity(sendIntent);
-                    AppRepository.mPutValue(getActivity()).putString("mBouquetLink", response.body().getData().getImage()).commit();
+                    AppRepository.mPutValue(getActivity()).putString("mBouquetLink", response.body().getData().getPageUrl()).commit();
                 }
             }
 
