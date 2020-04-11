@@ -50,13 +50,12 @@ public class PremiumFlowersAdapter extends RecyclerView.Adapter<PremiumFlowersAd
         holder.tvName.setText(flower.getFlowerName());
         holder.tvFree.setText(flower.getTitle());
         Picasso.get().load(flower.getFlowerImage()).into(holder.ivFlowerImage);
-        holder.rlParent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppRepository.mPutValue(context).putBoolean("fromFree", true).commit();
-                AppRepository.mPutValue(context).putString("picLink", flower.getFlowerImage()).commit();
-                context.startActivity(new Intent(context, SendBouquetActivity.class));
-            }
+        holder.rlParent.setOnClickListener(v -> {
+            AppRepository.mPutValue(context).putBoolean("fromFree", true).commit();
+            AppRepository.mPutValue(context).putString("picLink", flower.getFlowerImage()).commit();
+            AppRepository.mPutValue(context).putString("mBouquetSendingTitle", "Deliver Your Organically Inspired Flower").commit();
+
+            context.startActivity(new Intent(context, SendBouquetActivity.class));
         });
     }
 

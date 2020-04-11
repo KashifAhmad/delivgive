@@ -34,18 +34,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.techease.delivgive.models.flowerImagesModel.FlowersImagesResponse;
-import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.SendBouquetActivity;
 import com.techease.delivgive.adapters.CustomImagesAdapter;
 import com.techease.delivgive.adapters.PremiumFlowersDialogAdapter;
-import com.techease.delivgive.models.Images;
+import com.techease.delivgive.models.flowerImagesModel.FlowersImagesResponse;
 import com.techease.delivgive.models.premiumFlowers.Datum;
 import com.techease.delivgive.models.premiumFlowers.PremiumResponse;
 import com.techease.delivgive.utils.AppRepository;
-import com.techease.delivgive.utils.ProgressView;
 import com.techease.delivgive.utils.TouchImageView;
+import com.techease.delivgive.utils.interfaces.FlowerListener;
 import com.techease.delivgive.utils.interfaces.PremiumFlowersLinkListener;
 import com.techease.delivgive.utils.networking.BaseNetworking;
 
@@ -77,11 +75,11 @@ public class CreateFragment extends Fragment implements
     LinearLayout llColors;
     @BindView(R.id.llFlowers)
     LinearLayout llFlowers;
-//    @BindView(R.id.llPatterns)
+    //    @BindView(R.id.llPatterns)
 //    LinearLayout llPatterns;
     @BindView(R.id.llTexts)
     LinearLayout llTexts;
-//    @BindView(R.id.llTemplates)
+    //    @BindView(R.id.llTemplates)
 //    LinearLayout llTemplates;
     @BindView(R.id.flBouquetSpace)
     FrameLayout flBouquetSpace;
@@ -139,7 +137,6 @@ public class CreateFragment extends Fragment implements
         llSendToTop.setOnClickListener(this);
         btnDone.setOnClickListener(this);
         premiumFlowersAdapter = new PremiumFlowersDialogAdapter(getActivity(), premiumList, this);
-        initData();
         initPremium();
         checkPermission();
 
@@ -190,23 +187,6 @@ public class CreateFragment extends Fragment implements
         }
     }
 
-    public void initData() {
-//        imagesList.add(new Images(R.drawable.white_bucket_flowers, ""));
-//        imagesList.add(new Images(R.drawable.red_ghotai_flowers, ""));
-//        imagesList.add(new Images(R.drawable.red_bucket_flowers, ""));
-//        imagesList.add(new Images(R.drawable.bucket_2_flowers, ""));
-//        imagesList.add(new Images(R.drawable.bucket_flowers, ""));
-//        imagesList.add(new Images(R.drawable.white_bucket, ""));
-//        imagesList.add(new Images(R.drawable.red_gift, ""));
-//        imagesList.add(new Images(R.drawable.pick_and_yellow, ""));
-//        imagesList.add(new Images(R.drawable.red_and_white, ""));
-//        imagesList.add(new Images(R.drawable.bouquet_32, ""));
-//        imagesList.add(new Images(R.drawable.bouquet_52, ""));
-//        imagesList.add(new Images(R.drawable.pink_flowers, ""));
-//        imagesList.add(new Images(R.drawable.group_6, ""));
-//        imagesList.add(new Images(R.drawable.group_7, ""));
-//        imagesList.add(new Images(R.drawable.group, ""));
-    }
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -398,8 +378,6 @@ public class CreateFragment extends Fragment implements
         textView.setOnTouchListener(this);
 
 
-
-
         dialog = dialogBuilder.create();
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
@@ -443,12 +421,13 @@ public class CreateFragment extends Fragment implements
 
         return dialog;
     }
-    private void freeFlowersForCreateBouquet(){
+
+    private void freeFlowersForCreateBouquet() {
         Call<FlowersImagesResponse> imagesResponseCall = BaseNetworking.apiServices().flowers();
         imagesResponseCall.enqueue(new Callback<FlowersImagesResponse>() {
             @Override
             public void onResponse(Call<FlowersImagesResponse> call, Response<FlowersImagesResponse> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     imagesList.addAll(response.body().getData());
                     adapter.notifyDataSetChanged();
                 }

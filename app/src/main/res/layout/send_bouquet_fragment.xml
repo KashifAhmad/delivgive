@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/screenPadding"
+                android:layout_marginEnd="40dp"
                 android:text="@string/customize_your_delivery"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
@@ -109,7 +110,7 @@
                 android:imeOptions="actionDone"
                 android:layout_below="@id/etToPhoneNo"
                 android:layout_marginBottom="@dimen/widgetMargin"
-                android:hint="compose your message"/>
+                android:hint="Compose Your Message"/>
 
         </RelativeLayout>
         <Button
@@ -117,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
-            android:text="Send Now"
+            android:text="Deliver Now"
             android:layout_gravity="bottom"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />

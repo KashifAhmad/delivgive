@@ -38,12 +38,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="craving">Craving for your favorite food? Takeaway will deliver it where ever you are!</string>
-    <string name="free">Free</string>
-    <string name="premium">Premium</string>
-    <string name="create">Create</string>
-    <string name="bouquets">Bouquets</string>
-    <string name="drag_and_drop">Drage and drop the combination you like and send custom made premium bouquets.</string>
-    <string name="customize_your_delivery">Create a Custom Pairing for Delivery</string>
+    <string name="free">Free Deliveries</string>
+    <string name="premium">Premium Flowers</string>
+    <string name="create">Premium Create</string>
+    <string name="bouquets">Premium Bouquets</string>
+    <string name="drag_and_drop">Drag and drop the flowers, bouquets, and/or gifts you prefer and deliver a beauti-fully crafted custom combination!</string>
+    <string name="customize_your_delivery">Create a Custom Crafted Combination for Delivery</string>
     <string name="complimentary_flowers_bouquets_gifts">Complimentary Flowers/Bouquets/Gifts</string>
 
 </resources>

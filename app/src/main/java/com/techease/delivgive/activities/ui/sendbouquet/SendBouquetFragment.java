@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,6 +69,8 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
     EditText etDescription;
     @BindView(R.id.btnSendNow)
     Button btnSendNow;
+    @BindView(R.id.tvLetsCreate)
+    TextView tvLetsCreate;
     private String fromName, fromPhone, toName, toPhone, description, freeFilePath;
     private File imgFile, freeImageFile;
     private boolean valid = false;
@@ -88,6 +91,7 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
     private void initUI() {
         ButterKnife.bind(this, view);
         btnSendNow.setOnClickListener(this);
+        tvLetsCreate.setText(AppRepository.mBouquetSendingTitle(getActivity()));
         ivBack.setOnClickListener(this);
         if (AppRepository.isFree(getActivity()) && ivBouquet.getDrawable() != null) {
             Picasso.get().load(AppRepository.mGetValue(getActivity()).getString("picLink", "")).into(ivBouquet);

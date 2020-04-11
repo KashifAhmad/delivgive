@@ -11,7 +11,7 @@
         android:layout_margin="10dp"
         android:singleLine="true"
         android:imeOptions="actionNext"
-        android:maxLength="15"
+        android:maxLength="60"
         android:inputType="text"
         android:background="@drawable/round_line_gray_border"
         android:gravity="center_vertical"

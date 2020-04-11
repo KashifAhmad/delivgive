@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvLetsCreate"
-        android:text="Please select and deliver the flowers, bouquets, and gifts from this inventory free of charge ! "
+        android:text="Select and deliver flowers, bouquets and gifts from this inventory at no charge!"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textStyle="italic"

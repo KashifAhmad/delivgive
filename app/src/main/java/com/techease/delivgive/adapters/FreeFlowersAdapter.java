@@ -51,6 +51,8 @@ public class FreeFlowersAdapter extends RecyclerView.Adapter<FreeFlowersAdapter.
         holder.ivFlowerImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppRepository.mPutValue(context).putString("mBouquetSendingTitle", "Deliver Your Complimentary Flower, Bouquet, or Gift”").commit();
+
                 AppRepository.mPutValue(context).putBoolean("fromFree", true).commit();
                 AppRepository.mPutValue(context).putString("picLink", flower.getFlowerImage()).commit();
                 context.startActivity(new Intent(context, SendBouquetActivity.class));

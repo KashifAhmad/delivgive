@@ -75,6 +75,9 @@ public class AppRepository {
     public static String mSelectedServices(Context context) {
         return String.valueOf(mGetValue(context).getStringSet("selectedServicesArray", null));
     }
+    public static String mBouquetSendingTitle(Context context) {
+        return String.valueOf(mGetValue(context).getString("mBouquetSendingTitle", null));
+    }
     public static int mClickedServiceID(Context context) {
         return mGetValue(context).getInt("clickedServiceID", 0);
     }
