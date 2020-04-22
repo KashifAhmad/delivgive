@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.techease.delivgive.R;
+import com.techease.delivgive.activities.MainBottomNavActivity;
 import com.techease.delivgive.activities.ui.CheckOutActivity;
 import com.techease.delivgive.models.addPaymentCardModels.AddCardResponse;
 import com.techease.delivgive.models.getUserPaymentCard.GetUserPaymentCardResponse;
@@ -78,7 +79,7 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
                         Toast.makeText(getActivity(), Configuation.NETWORK_MSG, Toast.LENGTH_SHORT).show();
                     }
                 }
-                startActivity(new Intent(getActivity(), CheckOutActivity.class));
+//                startActivity(new Intent(getActivity(), CheckOutActivity.class));
                 break;
             case R.id.ivBack:
                 getActivity().onBackPressed();
@@ -129,6 +130,8 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<AddCardResponse> call, Response<AddCardResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), MainBottomNavActivity.class));
+                    getActivity().finishAffinity();
                 }
             }
 
@@ -146,12 +149,12 @@ public class AddCardFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<GetUserPaymentCardResponse> call, Response<GetUserPaymentCardResponse> response) {
                 if (response.isSuccessful()) {
-                    if(response.body().getData().size()>0) {
+                    if (response.body().getData().size() > 0) {
                         etCardNumber.setText(response.body().getData().get(0).getUserCardNumber());
                         etHolderName.setText(response.body().getData().get(0).getUserCardHolderName());
                         etCVV.setText(response.body().getData().get(0).getUserCardCsv());
                         etExpiry.setText(response.body().getData().get(0).getUserCardExpiry());
-                    }else {
+                    } else {
                         Toast.makeText(getActivity(), "No Card Added", Toast.LENGTH_SHORT).show();
                     }
                 }

@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/screenPadding"
-                android:text="Let's create your \naccount"
+                android:text="Let's start using the app"
                 android:textStyle="bold"
                 android:layout_below="@id/ivBack"
                 android:textColor="@color/black"

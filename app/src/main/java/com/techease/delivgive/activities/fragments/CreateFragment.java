@@ -259,6 +259,8 @@ public class CreateFragment extends Fragment implements
             case R.id.btnDone:
                 saveBitMap(getActivity(), flBouquetSpace);
                 startActivity(new Intent(getActivity(), SendBouquetActivity.class));
+                AppRepository.mPutValue(getActivity()).putString("mBouquetSendingTitle", "Deliver Your Custom Crafted Combination").commit();
+
         }
 
 

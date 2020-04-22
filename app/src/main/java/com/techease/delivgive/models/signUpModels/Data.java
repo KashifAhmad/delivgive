@@ -15,7 +15,7 @@ public class Data {
     @SerializedName("fullname")
     private String mFullname;
     @SerializedName("id")
-    private Long mId;
+    private Integer mId;
     @SerializedName("updated_at")
     private String mUpdatedAt;
 
@@ -51,11 +51,11 @@ public class Data {
         mFullname = fullname;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return mId;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         mId = id;
     }
 

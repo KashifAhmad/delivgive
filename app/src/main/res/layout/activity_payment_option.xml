@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivBack"
+        android:layout_marginStart="@dimen/widgetMargin"
         android:textColor="@color/black"
         android:text="Select payment \nmethod"
         android:textSize="@dimen/app_name_size"

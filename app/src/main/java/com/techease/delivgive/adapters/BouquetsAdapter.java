@@ -48,7 +48,7 @@ public class BouquetsAdapter extends RecyclerView.Adapter<BouquetsAdapter.MyView
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Datum flower = flowersList.get(position);
         holder.tvName.setText(flower.getBucketTitle());
-//        holder.tvFree.setText(flower.getBucketTitle());
+//      holder.tvFree.setText(flower.getBucketTitle());
         Picasso.get().load(flower.getBucketImage()).into(holder.ivFlowerImage);
         holder.rlParent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +56,8 @@ public class BouquetsAdapter extends RecyclerView.Adapter<BouquetsAdapter.MyView
                 AppRepository.mPutValue(context).putBoolean("fromFree", true).commit();
                 AppRepository.mPutValue(context).putString("picLink", flower.getBucketImage()).commit();
                 context.startActivity(new Intent(context, SendBouquetActivity.class));
+                AppRepository.mPutValue(context).putString("mBouquetSendingTitle", "Deliver Your Artisan Bouquet").commit();
+
             }
         });
 

@@ -17,7 +17,9 @@ import androidx.fragment.app.Fragment;
 
 import com.techease.delivgive.R;
 import com.techease.delivgive.activities.LoginActivity;
+import com.techease.delivgive.activities.PaymentOptionActivity;
 import com.techease.delivgive.models.signUpModels.SignUpResponse;
+import com.techease.delivgive.utils.AppRepository;
 import com.techease.delivgive.utils.Connectivity;
 import com.techease.delivgive.utils.ProgressView;
 import com.techease.delivgive.utils.networking.BaseNetworking;
@@ -150,7 +152,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                 ProgressView.mDialog.dismiss();
                 if (response.isSuccessful()) {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+//                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    startActivity(new Intent(getActivity(), PaymentOptionActivity.class));
+                    AppRepository.mPutValue(getActivity()).putInt("userID", response.body().getData().getId()).commit();
+                    AppRepository.mPutValue(getActivity()).putString("mUserName", response.body().getData().getFullname()).commit();
+                    AppRepository.mPutValue(getActivity()).putString("mUserEmail", response.body().getData().getEmail()).commit();
+                    getActivity().finishAffinity();
+
                 } else {
                     JSONObject jsonObject = null;
                     try {

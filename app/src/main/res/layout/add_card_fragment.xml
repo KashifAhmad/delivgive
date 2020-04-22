@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ivBack"
+            android:layout_marginStart="@dimen/widgetMargin"
             android:layout_marginTop="@dimen/widgetMargin"
             android:text="Add Card"
             android:textAllCaps="false"
@@ -51,7 +52,7 @@
             android:layout_below="@id/etCardHolderName"
             android:layout_marginTop="@dimen/screenPadding"
             android:hint="Card Number"
-
+            android:maxLength="16"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:paddingBottom="20dp"
@@ -84,6 +85,7 @@
                 android:layout_weight="1"
                 android:hint="CVV"
                 android:imeOptions="actionDone"
+                android:maxLength="3"
                 android:inputType="number"
                 android:paddingBottom="20dp"
                 android:singleLine="true" />

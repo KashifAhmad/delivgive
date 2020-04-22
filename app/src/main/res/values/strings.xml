@@ -42,8 +42,8 @@
     <string name="premium">Premium Flowers</string>
     <string name="create">Premium Create</string>
     <string name="bouquets">Premium Bouquets</string>
-    <string name="drag_and_drop">Drag and drop the flowers, bouquets, and/or gifts you prefer and deliver a beauti-fully crafted custom combination!</string>
+    <string name="drag_and_drop">Drag and drop the flowers, bouquets and gifts you prefer and deliver a beautifully crafted custom combination!</string>
     <string name="customize_your_delivery">Create a Custom Crafted Combination for Delivery</string>
-    <string name="complimentary_flowers_bouquets_gifts">Complimentary Flowers/Bouquets/Gifts</string>
+    <string name="complimentary_flowers_bouquets_gifts">Complimentary Flowers, Bouquets or Gifts</string>
 
 </resources>
