@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="268dp"
-    android:id="@+id/rl_parent"
     android:layout_height="249dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_constraintDimensionRatio="w,1:1"
@@ -16,7 +15,6 @@
         android:src="@drawable/progress_animation" />
 
     <TextView
-        android:id="@+id/tv_dialog_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

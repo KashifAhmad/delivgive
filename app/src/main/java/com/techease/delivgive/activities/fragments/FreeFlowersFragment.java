@@ -1,11 +1,15 @@
 package com.techease.delivgive.activities.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FreeFlowersFragment extends Fragment {
+public class FreeFlowersFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
     private View root;
     private FreeFlowersAdapter adapter;
     List<Datum> flowersList = new ArrayList<>();
@@ -42,6 +46,7 @@ public class FreeFlowersFragment extends Fragment {
         return root;
     }
 
+
     private void initUI() {
         ButterKnife.bind(this, root);
         rvFlowers.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -49,6 +54,7 @@ public class FreeFlowersFragment extends Fragment {
         rvFlowers.setAdapter(adapter);
         initData();
         ProgressView.loader(getActivity());
+        checkPermission();
     }
 
     private void initData() {
@@ -57,7 +63,7 @@ public class FreeFlowersFragment extends Fragment {
             @Override
             public void onResponse(Call<FreeFlowersResponse> call, Response<FreeFlowersResponse> response) {
                 ProgressView.mDialog.dismiss();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     flowersList.addAll(response.body().getData());
                     adapter.notifyDataSetChanged();
                 }
@@ -69,4 +75,49 @@ public class FreeFlowersFragment extends Fragment {
             }
         });
     }
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1001);
+
+            }
+        } else {
+            // Permission has already been granted
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1001: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
 }

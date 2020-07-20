@@ -1,14 +1,9 @@
 package com.techease.delivgive.activities.ui.sendbouquet;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +24,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.squareup.picasso.Picasso;
 import com.techease.delivgive.R;
+import com.techease.delivgive.activities.MakeAccountPremiumActivity;
+import com.techease.delivgive.activities.PaymentOptionActivity;
+import com.techease.delivgive.adapters.PlansAdapter;
 import com.techease.delivgive.models.sendBouquetModels.SendBouquetResponse;
 import com.techease.delivgive.utils.AppRepository;
 import com.techease.delivgive.utils.Connectivity;
@@ -37,7 +36,6 @@ import com.techease.delivgive.utils.networking.BaseNetworking;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,7 +96,7 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
             saveImage(ivBouquet);
 //            saveBitMap(getActivity(), ivBouquet);
             AppRepository.mPutValue(getActivity()).putBoolean("fromFree", false).commit();
-        }else {
+        } else {
             imgFile = new File(AppRepository.mGetValue(getActivity()).getString("picPath", ""));
         }
         if (imgFile.exists()) {
@@ -152,16 +150,16 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
 
         try {
             outStream = new FileOutputStream(freeImageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-        try {
-            outStream.flush();
-            outStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+////            outStream.flush();
+////            outStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -180,14 +178,21 @@ public class SendBouquetFragment extends Fragment implements View.OnClickListene
         sendBouquets.enqueue(new Callback<SendBouquetResponse>() {
             @Override
             public void onResponse(Call<SendBouquetResponse> call, Response<SendBouquetResponse> response) {
+                Log.d("zma response", response.body().getMessage());
                 ProgressView.mDialog.dismiss();
-                if (response.isSuccessful()) {
+                if (response.body().getStatus()) {
                     getActivity().finish();
                     Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                     sendIntent.setData(Uri.parse("smsto:" + toPhone));
                     sendIntent.putExtra("sms_body", response.body().getData().getPageUrl());
                     startActivity(sendIntent);
                     AppRepository.mPutValue(getActivity()).putString("mBouquetLink", response.body().getData().getPageUrl()).commit();
+                } else {
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getMessage().contains("No Subscription")) {
+                        startActivity(new Intent(getActivity(), MakeAccountPremiumActivity.class));
+                        getActivity().finish();
+                    }
                 }
             }
 

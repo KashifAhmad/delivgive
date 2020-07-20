@@ -23,7 +23,6 @@
         android:padding="@dimen/startUpLayoutPadding">
 
         <TextView
-            android:id="@+id/dont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_account"
@@ -55,7 +54,6 @@
         android:padding="@dimen/startUpLayoutPadding">
 
         <TextView
-            android:id="@+id/already"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/already"
