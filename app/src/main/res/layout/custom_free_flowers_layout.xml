@@ -16,21 +16,23 @@
         android:textStyle="bold" />
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/tvFree">
 
         <ImageView
             android:id="@+id/ivFlower"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/group_2" />
+            android:layout_gravity="center"
+            android:src="@drawable/single_flower" />
 
         <TextView
             android:id="@+id/tvFlowerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/screenPadding"
             android:background="@drawable/round_bg_pink"
             android:padding="@dimen/clickableTextViewPadding"
